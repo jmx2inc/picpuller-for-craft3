@@ -2,7 +2,7 @@
 
 Integrate Instagram into Craft CMS.
 
-![Screenshot](resources/img/plugin-logo.png)
+![Screenshot](resources/img/screenshot.jpg)
 
 ## Requirements
 

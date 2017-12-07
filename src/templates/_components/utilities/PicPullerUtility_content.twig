@@ -1,0 +1,23 @@
+{#
+/**
+ * Pic Puller plugin for Craft CMS
+ *
+ * PicPullerUtility Utility Content
+ *
+ * @author    John F Morton
+ * @copyright Copyright (c) 2017 John F Morton
+ * @link      https://picpuller.com
+ * @package   PicPuller
+ * @since     3.0.0
+ */
+#}
+
+<h1>PicPullerUtility</h1>
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@jmx2/picpuller/assetbundles/picpullerutilityutility/dist', true) ~ '/img/PicPullerUtility-icon.svg' %}
+
+<img src="{{ iconUrl }}" height="64" width="64" />
+
+<p>Your Utility content goes here</p>
+
+<p>{{ someVar }}</p>

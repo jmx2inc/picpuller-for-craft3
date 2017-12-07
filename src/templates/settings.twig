@@ -1,0 +1,87 @@
+{#
+/**
+ * Pic Puller plugin for Craft CMS 3.x
+ *
+ * Pic Puller Settings.twig
+ *
+ * @author    John F Morton
+ * @copyright Copyright (c) 2017 John F Morton
+ * @link      https://picpuller.com
+ * @package   PicPuller
+ * @since     3.0.0
+ */
+#}
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{# @var picpuller jmx2\picpuller #}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("jmx2\\picpuller\\assetbundles\\picpuller\\PicPullerAsset") %}
+
+{{ forms.textField({
+    label: 'Short name for <strong>Pic Puller for Craft</strong>.',
+    instructions: 'Enter an alternate short name for the Pic Puller plugin, like "PPfC" or "Instagram".',
+    id: 'shortName',
+    name: 'shortName',
+    value: settings['shortName']})
+}}
+
+{# Check to see if this it the Pro edition #}
+{% if craft.app.getEdition() == 2 %}
+    <hr>
+    <h3>Sharing options</h3>
+    {% if settings['sharedoauth'] is defined %}
+
+        {% set ppShareoauth = settings['sharedoauth'] %}
+        {#{% set ppShareoauth = settings.shareoauth|join %}#}
+
+    {% else %}
+
+        {% set ppShareoauth = 0 %}
+
+    {% endif %}
+
+    {#{{ dump(settings) }}#}
+
+    {{ forms.lightswitchField({
+        label: "Let users share a single Instagram Authorization? <em>(default: off)</em>"|t,
+        instructions: "The normal behavior of Pic Puller is to have each Craft user authorize with their own Instagram account. You may override this to share a single Instagram account across the entire Craft site."|t,
+        id: 'sharedoauth',
+        name: 'sharedoauth',
+        on: settings['sharedoauth'],
+        autofocus: false,
+        required: false,
+        errors: ppShareoauth ? false : false
+     })
+    }}
+
+
+    {# Get all admin level users only #}
+    {% set users = craft.users.admin(1).all() %}
+
+    {% set ppShareuseroptions = { } %}
+    {% set ppSharedoauthuser = settings['sharedoauthuser'] %}
+
+    {% for user in users %}
+        {% set tempUserName = user.username %}
+        {% set tempName = user.firstName ~ ' ' ~ user.lastName %}
+        {% if user.firstName|length or user.lastName|length %}
+            {% set tempUserName = tempUserName ~ " <em>(" ~ tempName ~ ")</em>" %}
+        {% endif %}
+        {% set tempUser = { "label": tempUserName, "value": user.id } %}
+        {% set ppShareuseroptions = ppShareuseroptions | merge ([tempUser]) %}
+    {% endfor %}
+
+    {# dump(users) #}
+
+    {{ forms.radioGroupField({
+        label: "Select account for sharing oAuth. (Setting is ignored if setting above is <em>off</em>)."|t,
+        instructions: "If sharing a single oAuth, select an <strong>Admin</strong> user to serve as the user whose oAuth credentials will be used across the site for all users."|t,
+        options: ppShareuseroptions,
+        value: ppSharedoauthuser,
+        id: 'sharedoauthuser',
+        name: 'sharedoauthuser'
+    })
+    }}
+
+{% endif %}

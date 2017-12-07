@@ -1,0 +1,33 @@
+{# http://craft.pp.dev/admin/picpuller/mediarecent/{{ nextMaxId }} #}
+{% header "Content-Type: application/json" %}
+
+{# If shareoauth is true, set the user id to that user #}
+{% set shareoauth = craft.picPuller.getShareOauthSetting() %}
+
+{% if shareoauth == false %}
+    {% set pp_user = currentUser.id %}
+{% else %}
+    {% set pp_user = craft.picPuller.getSharedOauthUser %}
+{% endif %}
+
+{% if nextMaxId is not defined %}
+    {% set nextMaxId = '' %}
+{% endif %}
+{% for instagramdata in craft.picPuller.media_recent({'user_id' : pp_user,  'use_stale_cache' : true, 'limit': 30, 'max_id' : nextMaxId }) %}
+    {% if instagramdata.status is defined and instagramdata.status == 'true' %}
+        {% if loop.first %}
+            {
+            "meta": {"nextMaxId" : "{{instagramdata.next_max_id}}"},
+            "ppimages": [
+        {% endif %}{% if instagramdata.status == 'true' %} {
+        "url": "{{instagramdata.low_resolution}}",
+        "video" : {% if instagramdata.video_low_resolution != '' %}1{% else %}0{% endif %},
+        "media_id": "{{ instagramdata.media_id }}"
+        }{% if loop.last == false %},
+        {% endif %}
+    {% endif %}
+        {% if loop.last %}
+            ]
+            }{% endif %}
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,39 @@
+{% header "Content-Type: application/json" %}
+
+{% set shareoauth = craft.picPuller.getShareOauthSetting %}
+
+{% if shareoauth == false %}
+    {% set pp_user = currentUser.id %}
+{% else %}
+    {% set pp_user = craft.picPuller.getSharedOauthUser %}
+{% endif %}
+
+{% for instagramdata in craft.picPuller.media({'user_id' : pp_user,  'use_stale_cache' : true, 'media_id': mediaId }) %}
+    {% if instagramdata.status  %}
+        {% if loop.first %}
+            {
+            "ppimages": [
+        {% endif %} {
+        "url": "{{instagramdata.low_resolution}}",
+        "video" : {% if instagramdata.video_low_resolution != '' %}1{% else %}0{% endif %},
+        {# Since the caption and full name may contain line breaks, these are removed for use in the field type preview area b/c they break the JSON data when it is returned in this template #}
+        "caption": "{{ instagramdata.caption|replace({"\n":' ', "\r":' '}) }}",
+        "username": "{{ instagramdata.username }}",
+        "full_name": "{{ instagramdata.full_name|replace({"\n":' ', "\r":' '}) }}",
+        "link": "{{ instagramdata.link }}"
+        }{% if loop.last == false %},
+    {% endif %}
+        {% if loop.last %}
+            ]}
+        {% endif %}
+    {% else %}
+        {
+        "error": [{
+        "status": {{ instagramdata.status ?? 'true' ?? 'false' }},
+        "code" : {{instagramdata.code}} ,
+        "error_type" : "{{instagramdata.error_type}}" ,
+        "message" : "{{instagramdata.error_message}}"
+        }]
+        }
+    {% endif %}
+{% endfor %}

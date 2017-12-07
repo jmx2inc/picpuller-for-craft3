@@ -1,0 +1,85 @@
+{#
+/**
+ * Pic Puller plugin for Craft CMS 3.x
+ *
+ * Pic Puller index.twig
+ *
+ * @author    John F Morton
+ * @copyright Copyright (c) 2017 John F Morton
+ * @link      https://picpuller.com
+ * @package   PicPuller
+ * @since     3.0.0
+ */
+#}
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("jmx2\\picpuller\\assetbundles\\picpuller\\PicPullerAsset") %}
+{% do view.registerAssetBundle("jmx2\\picpuller\\assetbundles\\indexcpsection\\IndexCPSectionAsset") %}
+
+{# Link for the ? icon at the bottom of the page #}
+{% set docsUrl = "https://picpuller.com/documentation" %}
+
+{# The title of this CP section #}
+{% set title = "Pic Puller for Craft"|t('app') %}
+
+{# The URL to this plugin's base CP section #}
+{% set pluginCpUrl = url('pic-puller') %}
+
+{# Get a URL to an image in our AssetBundle #}
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@jmx2/picpuller/assetbundles/indexcpsection/dist', true) ~ '/img/Index-icon.svg' %}
+
+{# Content that should appear in the page header #}
+{% set extraPageHeaderHtml %}
+    <div class="buttons">
+        <a href="{{ pluginCpUrl }}" class="btn submit add icon">{{ "Click Me!"|t('pic-puller') }}</a>
+    </div>
+{% endset %}
+
+{% if currentUser.admin and craft.app.getEdition() == 2 %}
+    {% set tabs = {
+
+    setup: { label: "Account"|t, url: url('pic-puller') },
+    users: { label: "Authorized Users", url: url('pic-puller/users')}
+
+    } %}
+{% endif %}
+
+{% set userOauth = craft.picPuller.getInstagramOAuth(currentUser.id)  %}
+
+{% set sharingAuth = craft.picPuller.getShareOauthSetting() %}
+{% set sharedAuthUserId = craft.picPuller.getSharedOauthUser() %}
+{% set sharedUser = craft.users.id(sharedAuthUserId).one() %}
+
+{# The content of the CP Section#}
+{% set content %}
+    {% if sharingAuth  %}
+        {% if (sharedUser.id != currentUser.id) %}
+        <p>Craft is currently sharing Instagram credentials from user <span class="shareduser" style="color:red;"><em>{{ sharedUser.username}}</em></span> across all users of this site.</p>
+            {% endif %}
+
+        {% if (sharedUser.id == currentUser.id) %}
+            <h2 class='pp'>Authorization</h2>
+            <p><span class="shareduser" style="color:red;">Your Instagram credentials will be shared across this site.</span></p>
+            {% if userOauth  %}
+                {% include "pic-puller/admin/oauth-true" %}
+            {% else %}
+                {% include "pic-puller/admin/oauth-false" %}
+            {% endif %}
+
+        {% endif %}
+
+    {% else %}
+        <h2 class='pp'>Authorization</h2>
+        {% if userOauth %}
+            {% include "pic-puller/admin/oauth-true" %}
+        {% else %}
+            {% include "pic-puller/admin/oauth-false" %}
+        {% endif %}
+    {% endif %}
+
+
+
+
+{% endset %}

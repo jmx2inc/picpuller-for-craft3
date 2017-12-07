@@ -1,0 +1,43 @@
+{% set userFeed = craft.picPuller.user({'use_stale_cache' : false, 'user_id' : currentUser.id })  %}
+
+{% set authorization_id = craft.picPuller.getInstagramOAuth(currentUser.id) %}
+
+<form method="post" accept-charset="UTF-8" action="">
+    <input type="hidden" name="action" value="pic-puller/default/remove-oauth">
+    <input type="hidden" name="{{ craft.app.config.general.csrfTokenName }}" value="{{ craft.app.request.csrfToken }}">
+    <input type="hidden" name="authorization_id" value="{{ authorization_id }}" />
+    <input type="hidden" name="user_id" value="{{ currentUser.id }}" />
+
+    <p>The current logged in user, <em>{{ currentUser.username }}</em>, has saved Instagram authorization credentials.</p>
+
+    {% for instagramdata in userFeed %}
+        <div class="igpp igppavatar">
+
+            {% if instagramdata.status == TRUE %}
+                <div class='igpic_image'>
+                    <img src="{{ instagramdata.profile_picture }}" title='{{ instagramdata.full_name }}' width='110' height="110">
+                </div>
+                <div class='igpic_info'>
+                    <p class="titlefield">Account verified by Instagram</p>
+                    <p class='igpic_username'><a href="https://instagram.com/{{ instagramdata.username }}" title='Instagram for {{ instagramdata.full_name }}' target='_blank'>{{ instagramdata.username }}</a></p>
+                    <p class="igpp_fullname">{{ instagramdata.full_name }}</p>
+                    <p><input class="btn submit" type="submit" name="step2" value="Remove Instagram authorization for this user"></p>
+
+                </div>
+            {% else %}
+                <div class='igpic_image'>
+                    <span class="igpp_error">!</span>
+                </div>
+                <div class='igpic_info'>
+                    <p class="igpic_errornotice">An error was returned when verifying this information with Instagram.</p>
+                    <p>Error Type: {{ userFeed.error_type }}</p>
+                    <p>Error Message: {{ userFeed.error_message }}</p>
+                    <p>If error persists you may need to remove authorization and reauthorize.</p>
+                    <p><input class="btn submit" type="submit" name="step2" value="Remove Instagram authorization for this user"></p>
+
+                </div>
+            {% endif %}
+        </div>
+        <p class="igpic_clarification"><em>Note:</em> Removing authorization deletes the authorization keys from Craft CMS but it does not alter the authorizations in your Instagram account. You can manage <strong>Pic Puller for Craft</strong> permissions on the <a href="https://www.instagram.com/accounts/manage_access/" target="_blank">Instagram Authorized Applications page</a>.</p>
+    {% endfor %}
+</form>

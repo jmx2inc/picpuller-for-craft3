@@ -1,0 +1,51 @@
+{#
+/**
+ * Pic Puller plugin for Craft CMS
+ *
+ * LatestImage Widget Body
+ *
+ * @author    John F Morton
+ * @copyright Copyright (c) 2017 John F Morton
+ * @link      https://picpuller.com
+ * @package   PicPuller
+ * @since     3.0.0
+ */
+#}
+
+<style>
+    .pppreviewimage {
+        max-width: 100%;
+        margin: 0 auto;
+        display: block;
+        border: 1px solid #aaa;
+    }
+</style>
+
+<div class="body">
+    {% for instagramdata in craft.picPuller.media_recent({'user_id' : 1,  'use_stale_cache' : true, 'limit': 1}) %}
+        <p><img src="{{ instagramdata.low_resolution }}" class='pppreviewimage'></p>
+        {% if instagramdata.caption is not empty %}
+        <p><em>Caption: </em>{{ instagramdata.caption }}</p>
+        {% endif %}
+    {% endfor %}
+    {##}
+    {#{% if media_recent[0].status == 'true' %}#}
+        {#{% for igdata in media_recent %}#}
+            {#{% if igdata.video_low_resolution  == '' %}#}
+                {#<p><img src="{{ igdata.low_resolution }}" class='pppreviewimage'></p>#}
+            {#{% else %}#}
+                {#<p>#}
+                    {#<video controls poster="{{ igdata.low_resolution }}" class='pppreviewimage'>#}
+                        {#<source src="{{ igdata.video_low_resolution }}" type="video/mp4">#}
+                        {#<img src="{{ igdata.low_resolution }}" class='pppreviewimage'>#}
+                    {#</video>#}
+                {#</p>#}
+            {#{% endif %}#}
+            {#{% if igdata.caption is not empty %}#}
+                {#<p><em>Caption: </em>{{ igdata.caption }}</p>#}
+            {#{% endif %}#}
+        {#{% endfor %}#}
+    {#{% else %}#}
+        {#<p>No Pic Puller for Craft authorization found. This account needs authorization before it can pull in Instagram media.</p>#}
+    {#{% endif %}#}
+</div>

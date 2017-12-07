@@ -1,0 +1,97 @@
+/**
+ * Pic Puller plugin for Craft CMS
+ *
+ * Pic Puller CSS
+ *
+ * @author    John F Morton
+ * @copyright Copyright (c) 2017 John F Morton
+ * @link      https://picpuller.com
+ * @package   PicPuller
+ * @since     3.0.0
+ */
+
+#status.pp {
+    text-align: center;
+    position: absolute;
+    top: 110px;
+    left: 120px;
+}
+
+#returnbt {
+    display: none;
+}
+
+.igppavatar {
+    display: block;
+    /*width: 380px;*/
+}
+
+.igpic_image {
+    padding: 5px;
+    border-radius: 4px;
+    box-shadow: 0 0 1px rgba(0,0,0,.1),0 1px 5px rgba(0,0,0,.15);
+    float: left;
+    margin-right: 10px;
+}
+
+.igpic_image img {
+    display: block;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.15),inset 0 0 2px 0 rgba(0,0,0,.2);
+}
+
+.igpic_image .igpp_error {
+    background: #fefcea; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, #fefcea 0%, #f1da36 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#fefcea), color-stop(100%,#f1da36)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover, #fefcea 0%,#f1da36 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover, #fefcea 0%,#f1da36 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, #fefcea 0%,#f1da36 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center, #fefcea 0%,#f1da36 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    display: block;
+    width: 110px;
+    height: 110px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.igpic_info p {
+    margin: 2px 0;
+}
+
+.igpic_info {
+    color: #999;
+}
+
+.igpic_info .titlefield, .igpic_info .igpp_fullname {
+    font-size: 0.85em;
+}
+
+.igpic_info .submit {
+    margin-top: 8px;
+}
+
+.igpic_username {
+    font-weight: bold;
+    font-size: 110%;
+    color: #333;
+}
+
+.igpic_errornotice {
+    font-weight: bold;
+    color: #d95949;
+}
+
+.igpic_clarification {
+    margin: 3em 0 0;
+    padding: 1em;
+    clear: left;
+    background: #feffe5;
+    border: 1px solid #b3b3b3;
+    border-radius: 4px;
+    max-width: 470px;
+}

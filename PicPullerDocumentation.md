@@ -52,11 +52,15 @@ If you don't already subscribe to **Craft Link List**, please check it out at [h
 
 To authorize a Craft site to pull in Instgram media, a user must allow access. After installing Pic Puller, the site will ask for authorization.
 
-![Pic Puller for Craft "Account" tab in the Craft control panel](screenshots-for-docs/02_pp_authorize.png)
+![Pic Puller for Craft "Account" tab in the Craft control panel](resources/img/01_Pic_Puller_for_Craft_-_Pic_Puller_for_Craft.png)
 
 Once authorization has been granted, Pic Puller will display the authorized user's credentials.
 
-![Pic Puller for Craft "Account" tab in the Craft control panel](screenshots-for-docs/03_pp_success.png)
+![Pic Puller for Craft "Account" tab in the Craft control panel](resources/img/02_Pic_Puller_for_Craft_-_Pic_Puller_for_Craft.png)
+
+Users will see _Pic Puller_ as an authorized application in their Instagram account.
+
+![Pic Puller for Craft in the Instagram Authorized Application page](resources/img/Authorized_Apps_Instagram.png)
 
 ### Multiple users and Pic Puller for Craft
 
@@ -70,11 +74,11 @@ Users that have not been granted "Admin" rights within Craft can still access th
 
 These non-admin users will have the ability to authorize and de-authorize Pic Puller with an Instagram account. Non-admin users will not be able to see the list of authorized users across the entire Craft site.
 
-![Pic Puller for Craft "Authorized Users" tab in the Craft control panel](screenshots-for-docs/04_multiple_users.png)
+![Pic Puller for Craft "Authorized Users" tab in the Craft control panel](resources/img/03_Pic_Puller_for_Craft_-_Pic_Puller_for_Craft.png)
 
 ### Optional behavior for multiple users
 
-![Sharing a single Instagram authorization](screenshots-for-docs/10_sharing-oauth.png)
+![Sharing a single Instagram authorization](resources/img/04_Pic_Puller_for_Craft_-_Plugins_-_Pic_Puller_for_Craft.png)
 As described above, the default behavior of Pic Puller for Craft is for each Craft user to authenticate their Craft account with their Instagram account. 
 
 You can override this default behavior and have a single oAuth authorization be shared amongst all users of the Craft site. The most likely scenario for this feature is of a company site that has many site editors, but only a single Instagram account across the organization. Choosing to use a single Instagram authorization requires that the site developer choose a single user as the master Instagram account holder on the site. **This user must be an Admin.** The selection of the master Instagram user is made from the Pic Puller settings panel. 
@@ -87,11 +91,13 @@ Tip: If your Instagram account holder in your organization is not someone who wo
 
 The Pic Puller Image Browser field type lets an authorized user browse their Instagram media stream and select media for use in a Craft entry.
 
-When setting up a field select "Pic Puller Image Browser" from the Field Type dropdown.
+When setting up a field select "Pic Puller: Instagram Browser" from the Field Type dropdown.
 
-![Creating a Pic Puller Image Browser field type](screenshots-for-docs/05_fieldtype.png)
+![Creating a Pic Puller Image Browser field type](resources/img/05_Instagram_Browser_-_Pic_Puller_for_Craft.png)
 
-![The Pic Puller Image Browser](screenshots-for-docs/06_imagebrowser.png)
+![The Pic Puller Instagram Browser](resources/img/06_Sample_entry_-_Pic_Puller_for_Craft.jpg)
+
+![The Pic Puller Instagram Browser Thumbnail Preview](resources/img/07_Sample_entry_-_Pic_Puller_for_Craft.png)
 
 The field type searches Instagram to retrieve a media ID for an image or video uploaded through Instagram. A small video icon in the upper lefthand corner designates that the piece of media is a video rather than an image.
 
@@ -423,11 +429,11 @@ error_message: a string describing the error
 
 ### Pic Puller Options
 
-#### Control Panel Widget
+#### Control Panel Widgets
 
-Pic Puller includes a control panel widget that displays the most recent image from an authorized user's Instagram feed. It is added on a per user basis to the Dashboard home screen in the control panel.
+Pic Puller includes 2 control panel widgets. The Latest Image widget that displays the most recent image from an authorized user's Instagram feed. It is added on a per user basis to the Dashboard home screen in the control panel. The Instagram Status widget displays an authorized Instagram user's user data. 
 
-![The Pic Puller widget](screenshots-for-docs/07_widget.png)
+![The Pic Puller widget](resources/img/08_Dashboard_-_Pic_Puller_for_Craft.png)
 
 #### Customize the plug in name
 
@@ -437,11 +443,10 @@ Click the gear icon and go to the Plugins page within the control panel.
 
 Now click the name of the plugin, Pic Puller for Craft.
 
-![Create a new name](screenshots-for-docs/08_namechange.png)
+![Create a new name for Pic Puller](resources/img/09_Pic_Puller_for_Craft_-_Plugins_-_Pic_Puller_for_Craft.png)
 
 Change it to whatever you like "PPfC", Pic Puller" or even just "Instagram". Then click Save. You will see the change immediately. If you leave the name blank, it will default back to the full name of the plugin.
 
-![Displaying the new name](screenshots-for-docs/09_namechange.png)
 
 ### FAQs
 

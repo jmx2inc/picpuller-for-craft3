@@ -1,0 +1,9 @@
+# Craft Storage (cache) [http://buildwithcraft.com/help/craft-storage-gitignore]
+/craft/storage/*
+!/craft/storage/logo/*
+
+/.env
+/.idea
+/vendor
+.DS_Store
+*.sublime-*

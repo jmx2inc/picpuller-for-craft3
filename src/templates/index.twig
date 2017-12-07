@@ -12,6 +12,8 @@
  */
 #}
 {# @var craft \craft\web\twig\variables\CraftVariable #}
+{# @var picpuller \jmx2\picpuller\variables\PicPullerVariable #}
+
 {% extends "_layouts/cp" %}
 {% import "_includes/forms" as forms %}
 
@@ -33,7 +35,8 @@
 {# Content that should appear in the page header #}
 {% set extraPageHeaderHtml %}
     <div class="buttons">
-        <a href="{{ pluginCpUrl }}" class="btn submit add icon">{{ "Click Me!"|t('pic-puller') }}</a>
+        <a href="{{ pluginCpUrl }}"
+           class="btn submit add icon">{{ "Click Me!"|t('pic-puller') }}</a>
     </div>
 {% endset %}
 
@@ -46,7 +49,7 @@
     } %}
 {% endif %}
 
-{% set userOauth = craft.picPuller.getInstagramOAuth(currentUser.id)  %}
+{% set userOauth = craft.picPuller.getInstagramOAuth(currentUser.id) %}
 
 {% set sharingAuth = craft.picPuller.getShareOauthSetting() %}
 {% set sharedAuthUserId = craft.picPuller.getSharedOauthUser() %}
@@ -54,15 +57,19 @@
 
 {# The content of the CP Section#}
 {% set content %}
-    {% if sharingAuth  %}
+    {% if sharingAuth %}
         {% if (sharedUser.id != currentUser.id) %}
-        <p>Craft is currently sharing Instagram credentials from user <span class="shareduser" style="color:red;"><em>{{ sharedUser.username}}</em></span> across all users of this site.</p>
-            {% endif %}
+            <p>Craft is currently sharing Instagram credentials from user <span
+                        class="shareduser"
+                        style="color:red;"><em>{{ sharedUser.username }}</em></span>
+                across all users of this site.</p>
+        {% endif %}
 
         {% if (sharedUser.id == currentUser.id) %}
             <h2 class='pp'>Authorization</h2>
-            <p><span class="shareduser" style="color:red;">Your Instagram credentials will be shared across this site.</span></p>
-            {% if userOauth  %}
+            <p><span class="shareduser" style="color:red;">Your Instagram credentials will be shared across this site.</span>
+            </p>
+            {% if userOauth %}
                 {% include "pic-puller/admin/oauth-true" %}
             {% else %}
                 {% include "pic-puller/admin/oauth-false" %}

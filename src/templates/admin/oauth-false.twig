@@ -1,15 +1,24 @@
-{% set authURL = 'https://picpuller.com/authenticate/'%}
+{% set authURL = 'https://picpuller.com/authenticate/' %}
 
-<p>The current logged in user, <em>{{ currentUser.username }}</em>, has no saved <strong>Instagram</strong> authorization credentials.</p>
+<p>The current logged in user, <em>{{ currentUser.username }}</em>, has no saved
+    <strong>Instagram</strong> authorization credentials.</p>
 
-<p>If you would like to pull your <strong>Instagram</strong> images and videos into this site, you will need to grant access to your account. Your password is not stored inside of Craft.</p>
+<p>If you would like to pull your <strong>Instagram</strong> images and videos
+    into this site, you will need to grant access to your account. Your password
+    is not stored inside of Craft.</p>
 
 {# I've put "ppfcsrf" in the state value and will spilt that apart in the authtool so I can pass back the CSRF values #}
 {% if craft.app.config.general.enableCsrfProtection == true %}
     {% set csrfTokenName = craft.app.config.general.csrfTokenName %}
     {% set csrfToken = craft.app.request.csrfToken %}
-    <p><a href="https://api.instagram.com/oauth/authorize/?client_id=13fd6192d03d4bc9bc10d5102f2e3bbe&redirect_uri={{ authURL }}&response_type=code&state={{ url('pic-puller/auth') }}ppfcsrf{{ csrfTokenName }}ppfcsrf{{ csrfToken }}" class="btn submit">Authorize Pic Puller to access your Instagram account.</a></p>
+    <p>
+        <a href="https://api.instagram.com/oauth/authorize/?client_id=13fd6192d03d4bc9bc10d5102f2e3bbe&redirect_uri={{ authURL }}&response_type=code&state={{ url('pic-puller/auth') }}ppfcsrf{{ csrfTokenName }}ppfcsrf{{ csrfToken }}"
+           class="btn submit">Authorize Pic Puller to access your Instagram
+            account.</a></p>
 {% else %}
-    <p><a href="https://api.instagram.com/oauth/authorize/?client_id=13fd6192d03d4bc9bc10d5102f2e3bbe&redirect_uri={{ authURL }}&response_type=code&state={{ url('pic-puller/auth') }}" class="btn submit">Authorize Pic Puller to access your Instagram account.</a></p>
+    <p>
+        <a href="https://api.instagram.com/oauth/authorize/?client_id=13fd6192d03d4bc9bc10d5102f2e3bbe&redirect_uri={{ authURL }}&response_type=code&state={{ url('pic-puller/auth') }}"
+           class="btn submit">Authorize Pic Puller to access your Instagram
+            account.</a></p>
 {% endif %}
 

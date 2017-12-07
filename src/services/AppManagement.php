@@ -48,7 +48,7 @@ class AppManagement extends Component
      *
      * @return mixed
      */
-    public function exampleService()
+    public function exampleService ()
     {
         $result = 'app management service';
         return $result;
@@ -59,12 +59,13 @@ class AppManagement extends Component
      * Save Instagram ID and oAuth credentials in the database along with the craft_user_id they are associated with.
      *
      * PicPuller::$plugin->appManagement->saveCredentials()
+     *
      * @param PicPullerModel $model
      */
-    public function saveCredentials(PicPullerModel $model)
+    public function saveCredentials (PicPullerModel $model)
     {
         // If a record for the Craft user exists in this siteId, retrieve it
-        $record = Authorizations::findOne (['craft_user_id' => $model->craft_user_id, 'siteId' => Craft::$app->sites->currentSite->id]);
+        $record = Authorizations::findOne ( ['craft_user_id' => $model->craft_user_id , 'siteId' => Craft::$app->sites->currentSite->id] );
 
         // If this Craft user has no record yet, create a new one
         if (!$record) {
@@ -79,7 +80,7 @@ class AppManagement extends Component
         // Save the data
         $record->save ();
 
-        Craft::info('Saving credentials.', __METHOD__);
+        Craft::info ( 'Saving credentials.' , __METHOD__ );
 
         return true;
     }
@@ -87,11 +88,14 @@ class AppManagement extends Component
     /**
      * Return the oAuth value for a user based on the user's Craft User ID
      * PicPuller::$plugin->appManagement->getUserOauthValue( INT $craftUserId)
+     *
      * @param INT $craftUserId the ID of the Craft User
+     *
      * @return STR The oAuth valuse for the user
      */
-    public function getUserOauthValue( INT $craftUserId ) {
-        $record = Authorizations::findOne (['craft_user_id' => $craftUserId]);
+    public function getUserOauthValue (INT $craftUserId)
+    {
+        $record = Authorizations::findOne ( ['craft_user_id' => $craftUserId] );
         if ($record) {
             return $record['instagram_oauth'];
         } else {
@@ -101,38 +105,45 @@ class AppManagement extends Component
 
     /**
      * Return the Instagram ID of for a user based on the user's Craft ID
+     *
      * @param  INT $id The ID of the Craft user
+     *
      * @return STR     The Instagram ID for the user
      */
-    public function getInstagramId($craft_user_id) {
+    public function getInstagramId ($craft_user_id)
+    {
         $query = (new Query())
-            ->select('instagram_id')
-            ->from('picpuller_authorizations')
-            ->where('craft_user_id=' . $craft_user_id )
-            ->one();
+            ->select ( 'instagram_id' )
+            ->from ( 'picpuller_authorizations' )
+            ->where ( 'craft_user_id='.$craft_user_id )
+            ->one ();
         return $query['instagram_id'];
     }
 
     /**
      * Delete an AuthorizationRecord by its ID
+     *
      * @param INT $id the ID of the authorization to delete
+     *
      * @return BOOL true or false
      */
-    public function deleteAuthorizationByCraftUserId($id) {
-        Craft::info('Deleting oAuth with id of '. $id);
-        $userToDelete = Authorizations::find()->where(['craft_user_id' => $id])->one();
-        if( $userToDelete->delete() ) {
+    public function deleteAuthorizationByCraftUserId ($id)
+    {
+        Craft::info ( 'Deleting oAuth with id of '.$id );
+        $userToDelete = Authorizations::find ()->where ( ['craft_user_id' => $id] )->one ();
+        if ($userToDelete->delete ()) {
             return true;
         }
     }
 
-    public function getAllUsers() {
+    public function getAllUsers ()
+    {
         $allUsers = (new Query())
-            ->select('craft_user_id, instagram_id, instagram_oauth, u.firstName, u.lastName, u.username')
-            ->from('picpuller_authorizations oauth')
-            ->join('INNER JOIN','users u', 'oauth.craft_user_id=u.id')
-            ->orderBy('u.id')
-            ->all();
+            ->select ( 'craft_user_id, instagram_id, instagram_oauth, u.firstName, u.lastName, u.username' )
+            ->from ( 'picpuller_authorizations oauth' )
+            ->join ( 'INNER JOIN' , 'users u' , 'oauth.craft_user_id=u.id' )
+            ->orderBy ( 'u.id' )
+            ->all ();
         return $allUsers;
     }
 

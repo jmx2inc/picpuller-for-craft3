@@ -15,18 +15,18 @@ class m171206_161334_craft3_upgrade extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function safeUp ()
     {
         // Place migration code here...
 
         // old fieldtype was called "PicPuller_ImageBrowser"
 
         // Auto-convert old PicPuller_ImageBrowser fields to the "Imagebrowser::class" from the new Pic Puller, i.e. jmx2\picpuller\fields\Imagebrowser
-        $this->update('{{%fields}}', [
+        $this->update ( '{{%fields}}' , [
             'type' => Imagebrowser::class
-        ], [
+        ] , [
             'type' => 'PicPuller_ImageBrowser'
-        ], [], false);
+        ] , [] , false );
 
 
         // old table for authorizations was "picpuller_authorizations",
@@ -41,10 +41,10 @@ class m171206_161334_craft3_upgrade extends Migration
         // uid -> char (36) not null - stays the same
         // there was no "siteId" column, but Craft 3 version should have one
 
-        if ($this->db->columnExists('{{%picpuller_authorizations}}', 'user_id')) {
+        if ($this->db->columnExists ( '{{%picpuller_authorizations}}' , 'user_id' )) {
             MigrationHelper::renameColumn ( '{{%picpuller_authorizations}}' , 'user_id' , 'craft_user_id' );
         }
-        if ($this->db->columnExists('{{%picpuller_authorizations}}', 'oauth')) {
+        if ($this->db->columnExists ( '{{%picpuller_authorizations}}' , 'oauth' )) {
             MigrationHelper::renameColumn ( '{{%picpuller_authorizations}}' , 'oauth' , 'instagram_oauth' );
         }
     }
@@ -52,7 +52,7 @@ class m171206_161334_craft3_upgrade extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown ()
     {
         echo "m171206_161334_craft3_upgrade cannot be reverted.\n";
         return false;

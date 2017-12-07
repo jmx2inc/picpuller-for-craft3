@@ -67,11 +67,11 @@ class PicPullerTask extends Task
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
-            ['someAttribute', 'string'],
-            ['someAttribute', 'default', 'value' => 'Some Default'],
+            ['someAttribute' , 'string'] ,
+            ['someAttribute' , 'default' , 'value' => 'Some Default'] ,
         ];
     }
 
@@ -80,7 +80,7 @@ class PicPullerTask extends Task
      *
      * @return int The total number of steps for this task
      */
-    public function getTotalSteps(): int
+    public function getTotalSteps (): int
     {
         return 1;
     }
@@ -92,7 +92,7 @@ class PicPullerTask extends Task
      *
      * @return bool|string True if the step was successful, false or an error message if not
      */
-    public function runStep(int $step)
+    public function runStep (int $step)
     {
         return true;
     }
@@ -105,8 +105,8 @@ class PicPullerTask extends Task
      *
      * @return string The default task description
      */
-    protected function defaultDescription(): string
+    protected function defaultDescription (): string
     {
-        return Craft::t('pic-puller', 'PicPullerTask');
+        return Craft::t ( 'pic-puller' , 'PicPullerTask' );
     }
 }

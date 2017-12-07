@@ -21,5 +21,5 @@
  * @since     3.0.0
  */
 return [
-    'Pic Puller plugin loaded' => 'Pic Puller plugin loaded',
+    'Pic Puller plugin loaded' => 'Pic Puller plugin loaded' ,
 ];

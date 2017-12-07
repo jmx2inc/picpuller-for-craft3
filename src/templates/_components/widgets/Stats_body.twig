@@ -11,19 +11,26 @@
  * @since     3.0.0
  */
 #}
+
+{% set ppname = craft.picPuller.customName %}
+
 {% for instagramdata in craft.picPuller.user({'use_stale_cache' : false, 'user_id' : 1 }) %}
-  <p>Status: {{ instagramdata.status ? 'All good.' : 'Not good.' }}</p>
-  
-  {% if instagramdata.status == TRUE %}
-    <p>{{ instagramdata.cacheddata ? 'You’re using cached data.' : 'You\'re not using cached data' }}</p>
-    <p>username: {{ instagramdata.username }}</p>
-    <p>full_name: {{ instagramdata.full_name }}</p>
-    <p>profile_picture:</p>
-    <p><img src="{{ instagramdata.profile_picture }}" alt='{{ instagramdata.full_name }}'></p>
-    <p>counts_media: {{ instagramdata.counts_media }}</p>
-    <p>counts_followed_by: {{ instagramdata.counts_followed_by }}</p>
-  {% else %}
-    <p>Error Type: {{ instagramdata.error_type }}</p>
-    <p>Error Message: {{ instagramdata.error_message }}</p>
-  {% endif %}
+    <p>Status: {{ instagramdata.status ? 'All good.' : 'Not good.' }}</p>
+
+    {% if instagramdata.status == TRUE %}
+        <p>{{ instagramdata.cacheddata ? 'You’re using cached data.' : 'You\'re not using cached data' }}</p>
+
+        <p><img src="{{ instagramdata.profile_picture }}"
+                alt='{{ instagramdata.full_name }}'></p>
+        <p>Username: {{ instagramdata.username }}<br>
+            Full name: {{ instagramdata.full_name }}<br>
+            Media count: {{ instagramdata.counts_media }}<br>
+            Followers count: {{ instagramdata.counts_followed_by }}</p>
+    {% else %}
+        <p>Error Type: {{ instagramdata.error_type }}</p>
+        <p>Error Message: {{ instagramdata.error_message }}</p>
+        <p>Check the <a
+                    href="{{ craft.picPuller.getPicPullerBaseUrl() }}">{{ ppname }}
+                authorization page</a> for more details.</p>
+    {% endif %}
 {% endfor %}

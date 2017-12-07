@@ -1,4 +1,5 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
+{# @var picpuller \jmx2\picpuller\variables\PicPullerVariable #}
 {% if currentUser.admin == 0 %}
     {% redirect 'pic-puller' %}
 {% endif %}
@@ -33,7 +34,7 @@ users: { label: "Authorized Users", url: url('pic-puller/users')}
 {% endif %}
 
 {% set content %}
-<h2 class='pp'>Authorized users</h2>
+    <h2 class='pp'>Authorized users</h2>
 
     <table class="data collapsible">
         <thead>
@@ -47,28 +48,42 @@ users: { label: "Authorized Users", url: url('pic-puller/users')}
         </thead>
         <tbody>
 
-        {% if shareoauth == true  %}
-            <p>Pic Puller is set to share the Instagram authorization from the Craft CMS user account for <span class="shareduser" style="color:red;"><em>{{ craft.users.id(shareoauthUserId).one().username }}</em></span> across all users of this site. As a site admin, you may change this from the <a href="{{ craft.picPuller.getSettingsUrl() }}" title='Pic Puller settings'>settings screen</a>.</p>
-            <p>Instagram authorization credentials must be shown below in order to share them. If credentials are not shown, authorize the user <span class="shareduser" style="color:red;"><em>{{ craft.users.id(shareoauthUserId).one().username }}</em></span> account with Instagram for access.</p>
+        {% if shareoauth == true %}
+            <p>Pic Puller is set to share the Instagram authorization from the
+                Craft CMS user account for <span class="shareduser"
+                                                 style="color:red;"><em>{{ craft.users.id(shareoauthUserId).one().username }}</em></span>
+                across all users of this site. As a site admin, you may change
+                this from the <a href="{{ craft.picPuller.getSettingsUrl() }}"
+                                 title='Pic Puller settings'>settings screen</a>.
+            </p>
+            <p>Instagram authorization credentials must be shown below in order
+                to share them. If credentials are not shown, authorize the user
+                <span class="shareduser"
+                      style="color:red;"><em>{{ craft.users.id(shareoauthUserId).one().username }}</em></span>
+                account with Instagram for access.</p>
         {% else %}
-            <p>There {{ userverb }} {{ users|length }} {{ userphrase }} who {{ userverb2 }} authorized this site for access to their Instagram accounts.</p>
+            <p>There {{ userverb }} {{ users|length }} {{ userphrase }}
+                who {{ userverb2 }} authorized this site for access to their
+                Instagram accounts.</p>
         {% endif %}
 
         {% for entry in users %}
             {% if shareoauth == true and shareoauthUserId == entry.craft_user_id %}
                 <tr>
                     <td>{{ entry.craft_user_id }}</td>
-                    <td>{{ entry.firstName}} {{ entry.lastName}} <em>({{ entry.username}})</em></td>
-                    <td>{{entry.instagram_id}}</td>
-                    <td>{{entry.instagram_oauth}}</td>
+                    <td>{{ entry.firstName }} {{ entry.lastName }}
+                        <em>({{ entry.username }})</em></td>
+                    <td>{{ entry.instagram_id }}</td>
+                    <td>{{ entry.instagram_oauth }}</td>
                 </tr>
             {% endif %}
             {% if shareoauth == false %}
                 <tr>
                     <td>{% if currentUser.id ==  entry.craft_user_id %}&#9734; {% endif %}{{ entry.craft_user_id }}</td>
-                    <td>{{ entry.firstName}} {{ entry.lastName}} <em>({{ entry.username}})</em></td>
-                    <td>{{entry.instagram_id}}</td>
-                    <td>{{entry.instagram_oauth}}</td>
+                    <td>{{ entry.firstName }} {{ entry.lastName }}
+                        <em>({{ entry.username }})</em></td>
+                    <td>{{ entry.instagram_id }}</td>
+                    <td>{{ entry.instagram_oauth }}</td>
                 </tr>
             {% endif %}
         {% endfor %}

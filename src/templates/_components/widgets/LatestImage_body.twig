@@ -21,31 +21,21 @@
     }
 </style>
 
+{% set ppname = craft.picPuller.customName %}
+
 <div class="body">
     {% for instagramdata in craft.picPuller.media_recent({'user_id' : 1,  'use_stale_cache' : true, 'limit': 1}) %}
-        <p><img src="{{ instagramdata.low_resolution }}" class='pppreviewimage'></p>
-        {% if instagramdata.caption is not empty %}
-        <p><em>Caption: </em>{{ instagramdata.caption }}</p>
+        {% if instagramdata.status == 'true' %}
+            <p><img src="{{ instagramdata.low_resolution }}"
+                    class='pppreviewimage'></p>
+            {% if instagramdata.caption is not empty %}
+                <p><em>Caption: </em>{{ instagramdata.caption }}</p>
+            {% endif %}
+        {% else %}
+            <p>There was a problem retrieving your latest Instagram post.</p>
+            <p>Check the <a
+                        href="{{ craft.picPuller.getPicPullerBaseUrl() }}">{{ ppname }}
+                    authorization page</a> for more details.</p>
         {% endif %}
     {% endfor %}
-    {##}
-    {#{% if media_recent[0].status == 'true' %}#}
-        {#{% for igdata in media_recent %}#}
-            {#{% if igdata.video_low_resolution  == '' %}#}
-                {#<p><img src="{{ igdata.low_resolution }}" class='pppreviewimage'></p>#}
-            {#{% else %}#}
-                {#<p>#}
-                    {#<video controls poster="{{ igdata.low_resolution }}" class='pppreviewimage'>#}
-                        {#<source src="{{ igdata.video_low_resolution }}" type="video/mp4">#}
-                        {#<img src="{{ igdata.low_resolution }}" class='pppreviewimage'>#}
-                    {#</video>#}
-                {#</p>#}
-            {#{% endif %}#}
-            {#{% if igdata.caption is not empty %}#}
-                {#<p><em>Caption: </em>{{ igdata.caption }}</p>#}
-            {#{% endif %}#}
-        {#{% endfor %}#}
-    {#{% else %}#}
-        {#<p>No Pic Puller for Craft authorization found. This account needs authorization before it can pull in Instagram media.</p>#}
-    {#{% endif %}#}
 </div>

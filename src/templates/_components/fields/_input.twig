@@ -16,24 +16,15 @@
 {% set ppImageBrowserIconUrl = view.getAssetManager().getPublishedUrl('@jmx2/picpuller/assetbundles/field/dist', true) ~ '/img/pp-icon.png' %}
 
 {#
-
-{% import "_includes/forms" as forms %}
-
-{{ forms.text({
-    id: name,
-    name: name,
-    value: value,
-    class: 'nicetext'
-}) }}
-
-#}
-
-{#
  Using {{ name }} in the ids below helps find the field in the JS file.
 #}
 
 <div class='igpp preview' id="{{ name }}-preview"></div>
-<input class='igpp text halfwidth' type="text" id="{{ name }}-input" name="{{ name }}" value='{{ value }}'>
-<div class="igpp lookup hidden" id="{{ name }}-lookup"><img src='{{ magnifyingGlassUrl }}' alt="Magnifying Glass"></div>
+<input class='igpp text halfwidth' type="text" id="{{ name }}-input"
+       name="{{ name }}" value='{{ value }}'>
+<div class="igpp lookup hidden" id="{{ name }}-lookup"><img
+            src='{{ magnifyingGlassUrl }}' alt="Magnifying Glass"></div>
 <a class="igpp delete icon" title='Remove' id="{{ name }}-delete"></a>
-<div class="btn add icon dashed" data-ppbrowsertype='0' id="{{ name }}-btn">Browse Instagram</div>
+<div class="btn add icon dashed" data-ppbrowsertype='0' id="{{ name }}-btn">
+    Browse Instagram
+</div>

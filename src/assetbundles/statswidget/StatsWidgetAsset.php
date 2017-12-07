@@ -40,26 +40,26 @@ class StatsWidgetAsset extends AssetBundle
     /**
      * Initializes the bundle.
      */
-    public function init()
+    public function init ()
     {
         // define the path that your publishable resources live
         $this->sourcePath = "@jmx2/picpuller/assetbundles/statswidget/dist";
 
         // define the dependencies
         $this->depends = [
-            CpAsset::class,
+            CpAsset::class ,
         ];
 
         // define the relative path to CSS/JS files that should be registered with the page
         // when this asset bundle is registered
         $this->js = [
-            'js/Stats.js',
+            'js/Stats.js' ,
         ];
 
         $this->css = [
-            'css/Stats.css',
+            'css/Stats.css' ,
         ];
 
-        parent::init();
+        parent::init ();
     }
 }

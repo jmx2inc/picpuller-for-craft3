@@ -68,27 +68,33 @@ class PicPullerVariable
      *
      * @return array  An array of media and user data
      */
-    public function user ($tags = null) : array
+    public function user ($tags = null): array
     {
-        return PicPuller::$plugin->feed->user ($tags);
+        return PicPuller::$plugin->feed->user ( $tags );
     }
 
     /**
      * Get recent media from a single user from Instagram
-     * @param  array  $tags [description]
+     *
+     * @param  array $tags [description]
+     *
      * @return array  An array of media and user data
      */
-    public function media_recent($tags = null) {
-        return PicPuller::$plugin->feed->media_recent($tags);
+    public function media_recent ($tags = null)
+    {
+        return PicPuller::$plugin->feed->media_recent ( $tags );
     }
 
     /**
      * Get a single piece of media from Instagram
-     * @param  Array  $tags [description]
-     * @return Array  An array of media and user data
+     *
+     * @param  array $tags [description]
+     *
+     * @return array  An array of media and user data
      */
-    public function media($tags = null) {
-        return PicPuller::$plugin->feed->media ($tags);
+    public function media ($tags = null)
+    {
+        return PicPuller::$plugin->feed->media ( $tags );
     }
 
     /**
@@ -96,7 +102,8 @@ class PicPullerVariable
      *
      * @return bool The default is false indicating each user should authorize their own account
      */
-    public function getShareOauthSetting(){
+    public function getShareOauthSetting ()
+    {
         return PicPuller::$plugin->settings->sharedoauth;
     }
 
@@ -106,21 +113,46 @@ class PicPullerVariable
      *
      * @return string
      */
-    public function getSharedOauthUser() {
+    public function getSharedOauthUser ()
+    {
         return PicPuller::$plugin->settings->sharedoauthuser;
     }
 
-    public function getSettingsUrl() {
-        return UrlHelper::cpUrl ('settings/plugins/'.PicPuller::$plugin->id);
+    /**
+     * @return string
+     */
+    public function getSettingsUrl ()
+    {
+        return UrlHelper::cpUrl ( 'settings/plugins/'.PicPuller::$plugin->id );
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getPicPullerBaseUrl ()
+    {
+        return UrlHelper::cpUrl ( '/'.PicPuller::$plugin->id );
     }
 
     /**
      * @return mixed
      */
-    public function allUsers ()
+//    public function allUsers ()
+//    {
+//        $users = PicPuller::$plugin->appManagement->exampleService ();
+//        return $users;
+//    }
+
+    /**
+     * Return the customized name for the plugin
+     *
+     * @return string
+     */
+    public function getCustomName ()
     {
-        $users = PicPuller::$plugin->appManagement->exampleService ();
-        return $users;
+        $settings = PicPuller::$plugin->getSettings ();
+        return $settings->shortName;
     }
 
     /**

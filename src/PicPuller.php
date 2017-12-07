@@ -228,7 +228,7 @@ class PicPuller extends Plugin
      */
     protected function getName():string {
         Craft::trace('getName', self::className ());
-        $settings = PicPuller::$plugin->getSettings();
+        $settings = PicPuller::$plugin->getSettings ();
         return $settings->shortName;
     }
 }

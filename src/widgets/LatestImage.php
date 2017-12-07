@@ -47,9 +47,9 @@ class LatestImage extends Widget
      *
      * @return string The display name of this class.
      */
-    public static function displayName(): string
+    public static function displayName (): string
     {
-        return Craft::t('pic-puller', 'Latest Instagram Post');
+        return Craft::t ( 'pic-puller' , 'Latest Instagram Post' );
     }
 
     /**
@@ -57,9 +57,9 @@ class LatestImage extends Widget
      *
      * @return string|null The path to the widget’s SVG icon
      */
-    public static function iconPath()
+    public static function iconPath ()
     {
-        return Craft::getAlias("@jmx2/picpuller/assetbundles/latestimagewidget/dist/img/LatestImage-icon.svg");
+        return Craft::getAlias ( "@jmx2/picpuller/assetbundles/latestimagewidget/dist/img/LatestImage-icon.svg" );
     }
 
     /**
@@ -67,7 +67,7 @@ class LatestImage extends Widget
      *
      * @return int|null The widget’s maximum colspan, if it has one
      */
-    public static function maxColspan()
+    public static function maxColspan ()
     {
         return null;
     }
@@ -85,14 +85,14 @@ class LatestImage extends Widget
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
-        $rules = parent::rules();
-        $rules = array_merge(
-            $rules,
+        $rules = parent::rules ();
+        $rules = array_merge (
+            $rules ,
             [
-                ['message', 'string'],
-                ['message', 'default', 'value' => 'Hello, world.'],
+                ['message' , 'string'] ,
+                ['message' , 'default' , 'value' => 'Hello, world.'] ,
             ]
         );
         return $rules;
@@ -190,10 +190,10 @@ class LatestImage extends Widget
      *
      * @return string|null
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml ()
     {
-        return Craft::$app->getView()->renderTemplate(
-            'pic-puller/_components/widgets/LatestImage_settings',
+        return Craft::$app->getView ()->renderTemplate (
+            'pic-puller/_components/widgets/LatestImage_settings' ,
             [
                 'widget' => $this
             ]
@@ -207,14 +207,13 @@ class LatestImage extends Widget
      *                      should not be visible. (If you don’t want the widget
      *                      to be selectable in the first place, use {@link isSelectable()}.)
      */
-    public function getBodyHtml()
+    public function getBodyHtml ()
     {
-        Craft::$app->getView()->registerAssetBundle(LatestImageWidgetAsset::class);
+        Craft::$app->getView ()->registerAssetBundle ( LatestImageWidgetAsset::class );
 
 
-
-        return Craft::$app->getView()->renderTemplate(
-            'pic-puller/_components/widgets/LatestImage_body',
+        return Craft::$app->getView ()->renderTemplate (
+            'pic-puller/_components/widgets/LatestImage_body' ,
             [
                 'message' => $this->message
             ]

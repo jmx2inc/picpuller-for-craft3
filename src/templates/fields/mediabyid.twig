@@ -1,5 +1,6 @@
 {% header "Content-Type: application/json" %}
-
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{# @var picpuller \jmx2\picpuller\variables\PicPullerVariable #}
 {% set shareoauth = craft.picPuller.getShareOauthSetting %}
 
 {% if shareoauth == false %}

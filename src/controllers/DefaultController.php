@@ -120,9 +120,10 @@ class DefaultController extends Controller
      *
      * @return bool
      */
-    public function actionRemoveOauth() {
+    public function actionRemoveOauth ()
+    {
         $this->requirePostRequest ();
         $attributes = Craft::$app->request->getBodyParams ();
-        PicPuller::$plugin->appManagement->deleteAuthorizationByCraftUserId ($attributes['user_id']);
+        PicPuller::$plugin->appManagement->deleteAuthorizationByCraftUserId ( $attributes['user_id'] );
     }
 }

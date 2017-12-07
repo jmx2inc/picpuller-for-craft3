@@ -1,5 +1,6 @@
-{# http://craft.pp.dev/admin/picpuller/mediarecent/{{ nextMaxId }} #}
 {% header "Content-Type: application/json" %}
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{# @var picPuller \jmx2\picpuller\variables\PicPullerVariable #}
 
 {# If shareoauth is true, set the user id to that user #}
 {% set shareoauth = craft.picPuller.getShareOauthSetting() %}
@@ -17,10 +18,10 @@
     {% if instagramdata.status is defined and instagramdata.status == 'true' %}
         {% if loop.first %}
             {
-            "meta": {"nextMaxId" : "{{instagramdata.next_max_id}}"},
+            "meta": {"nextMaxId" : "{{ instagramdata.next_max_id }}"},
             "ppimages": [
         {% endif %}{% if instagramdata.status == 'true' %} {
-        "url": "{{instagramdata.low_resolution}}",
+        "url": "{{ instagramdata.low_resolution }}",
         "video" : {% if instagramdata.video_low_resolution != '' %}1{% else %}0{% endif %},
         "media_id": "{{ instagramdata.media_id }}"
         }{% if loop.last == false %},

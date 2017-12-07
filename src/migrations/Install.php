@@ -54,15 +54,15 @@ class Install extends Migration
      * @return boolean return a false value to indicate the migration fails
      * and should not proceed further. All other return values mean the migration succeeds.
      */
-    public function safeUp()
+    public function safeUp ()
     {
-        $this->driver = Craft::$app->getConfig()->getDb()->driver;
-        if ($this->createTables()) {
-            $this->createIndexes();
-            $this->addForeignKeys();
+        $this->driver = Craft::$app->getConfig ()->getDb ()->driver;
+        if ($this->createTables ()) {
+            $this->createIndexes ();
+            $this->addForeignKeys ();
             // Refresh the db schema caches
-            Craft::$app->db->schema->refresh();
-            $this->insertDefaultData();
+            Craft::$app->db->schema->refresh ();
+            $this->insertDefaultData ();
         }
 
         return true;
@@ -78,10 +78,10 @@ class Install extends Migration
      * @return boolean return a false value to indicate the migration fails
      * and should not proceed further. All other return values mean the migration succeeds.
      */
-    public function safeDown()
+    public function safeDown ()
     {
-        $this->driver = Craft::$app->getConfig()->getDb()->driver;
-        $this->removeTables();
+        $this->driver = Craft::$app->getConfig ()->getDb ()->driver;
+        $this->removeTables ();
 
         return true;
     }
@@ -94,26 +94,26 @@ class Install extends Migration
      *
      * @return bool
      */
-    protected function createTables()
+    protected function createTables ()
     {
         $tablesCreated = false;
 
-    // picpuller_authorizations table
-        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%picpuller_authorizations}}');
+        // picpuller_authorizations table
+        $tableSchema = Craft::$app->db->schema->getTableSchema ( '{{%picpuller_authorizations}}' );
         if ($tableSchema === null) {
             $tablesCreated = true;
-            $this->createTable(
-                '{{%picpuller_authorizations}}',
+            $this->createTable (
+                '{{%picpuller_authorizations}}' ,
                 [
-                    'id' => $this->primaryKey(),
-                    'dateCreated' => $this->dateTime()->notNull(),
-                    'dateUpdated' => $this->dateTime()->notNull(),
-                    'uid' => $this->uid(),
-                // // Custom columns in the table
-                    'siteId' => $this->integer()->notNull(),
-                    'craft_user_id' => $this->integer(11)->notNull()->defaultValue('0'),
-                    'instagram_id' => $this->string(255)->notNull()->defaultValue(''),
-                    'instagram_oauth' => $this->string(255)->notNull()->defaultValue(''),
+                    'id' => $this->primaryKey () ,
+                    'dateCreated' => $this->dateTime ()->notNull () ,
+                    'dateUpdated' => $this->dateTime ()->notNull () ,
+                    'uid' => $this->uid () ,
+                    // // Custom columns in the table
+                    'siteId' => $this->integer ()->notNull () ,
+                    'craft_user_id' => $this->integer ( 11 )->notNull ()->defaultValue ( '0' ) ,
+                    'instagram_id' => $this->string ( 255 )->notNull ()->defaultValue ( '' ) ,
+                    'instagram_oauth' => $this->string ( 255 )->notNull ()->defaultValue ( '' ) ,
                 ]
             );
         }
@@ -126,17 +126,17 @@ class Install extends Migration
      *
      * @return void
      */
-    protected function createIndexes()
+    protected function createIndexes ()
     {
-    // picpuller_authorizations table
-        $this->createIndex(
-            $this->db->getIndexName(
-                '{{%picpuller_authorizations}}',
-                'id',
+        // picpuller_authorizations table
+        $this->createIndex (
+            $this->db->getIndexName (
+                '{{%picpuller_authorizations}}' ,
+                'id' ,
                 true
-            ),
-            '{{%picpuller_authorizations}}',
-            'id',
+            ) ,
+            '{{%picpuller_authorizations}}' ,
+            'id' ,
             true
         );
         // Additional commands depending on the db driver
@@ -153,26 +153,26 @@ class Install extends Migration
      *
      * @return void
      */
-    protected function addForeignKeys()
+    protected function addForeignKeys ()
     {
         // picpuller_authorizations table keys for multi site
-        $this->addForeignKey(
-            $this->db->getForeignKeyName('{{%picpuller_authorizations}}', 'siteId'),
-            '{{%picpuller_authorizations}}',
-            'siteId',
-            '{{%sites}}',
-            'id',
-            'CASCADE',
+        $this->addForeignKey (
+            $this->db->getForeignKeyName ( '{{%picpuller_authorizations}}' , 'siteId' ) ,
+            '{{%picpuller_authorizations}}' ,
+            'siteId' ,
+            '{{%sites}}' ,
+            'id' ,
+            'CASCADE' ,
             'CASCADE'
         );
         // picpuller_authorizations table keys for users
-        $this->addForeignKey(
-            $this->db->getForeignKeyName('{{%picpuller_authorizations}}', 'craft_user_id'),
-            '{{%picpuller_authorizations}}',
-            'craft_user_id',
-            '{{%users}}',
-            'id',
-            'CASCADE',
+        $this->addForeignKey (
+            $this->db->getForeignKeyName ( '{{%picpuller_authorizations}}' , 'craft_user_id' ) ,
+            '{{%picpuller_authorizations}}' ,
+            'craft_user_id' ,
+            '{{%users}}' ,
+            'id' ,
+            'CASCADE' ,
             'CASCADE'
         );
     }
@@ -182,7 +182,7 @@ class Install extends Migration
      *
      * @return void
      */
-    protected function insertDefaultData()
+    protected function insertDefaultData ()
     {
     }
 
@@ -191,9 +191,9 @@ class Install extends Migration
      *
      * @return void
      */
-    protected function removeTables()
+    protected function removeTables ()
     {
-    // picpuller_authorizations table
-        $this->dropTableIfExists('{{%picpuller_authorizations}}');
+        // picpuller_authorizations table
+        $this->dropTableIfExists ( '{{%picpuller_authorizations}}' );
     }
 }

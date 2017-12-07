@@ -56,13 +56,13 @@ class Settings extends Model
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
-            ['shortName', 'string'],
-            ['shortName', 'default', 'value' => 'Pic Puller for Craft'],
-            ['sharedoauth', 'default', 'value' => 0],
-            ['sharedoauthuser', 'default', 'value' => 1]
+            ['shortName' , 'string'] ,
+            ['shortName' , 'default' , 'value' => 'Pic Puller for Craft'] ,
+            ['sharedoauth' , 'default' , 'value' => 0] ,
+            ['sharedoauthuser' , 'default' , 'value' => 1]
         ];
     }
 }

@@ -35,11 +35,11 @@ class PicPullerModel extends Model
     public $instagram_id;
     public $instagram_oauth;
 
-    public function attributeLabels()
+    public function attributeLabels ()
     {
         return [
-            'craft_user_id' => 'Craft CMS ID',
-            'instagram_id' => 'Instagram ID',
+            'craft_user_id' => 'Craft CMS ID' ,
+            'instagram_id' => 'Instagram ID' ,
             'instagram_oauth' => 'Instagram oAuth'
         ];
     }
@@ -49,7 +49,7 @@ class PicPullerModel extends Model
      *
      * @var string
      */
-//    public $someAttribute = 'Some Default';
+    // public $someAttribute = 'Some Default';
 
     // Public Methods
     // =========================================================================
@@ -64,12 +64,12 @@ class PicPullerModel extends Model
      *
      * @return array
      */
-    public function rules()
+    public function rules ()
     {
         return [
-            ['craft_user_id', 'string'],
-            ['instagram_id', 'string'],
-            ['instagram_oauth', 'string'],
+            ['craft_user_id' , 'string'] ,
+            ['instagram_id' , 'string'] ,
+            ['instagram_oauth' , 'string'] ,
         ];
     }
 }

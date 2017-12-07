@@ -47,9 +47,9 @@ class Stats extends Widget
      *
      * @return string The display name of this class.
      */
-    public static function displayName(): string
+    public static function displayName (): string
     {
-        return Craft::t('pic-puller', 'Stats');
+        return Craft::t ( 'pic-puller' , 'Instagram Status' );
     }
 
     /**
@@ -57,9 +57,9 @@ class Stats extends Widget
      *
      * @return string|null The path to the widget’s SVG icon
      */
-    public static function iconPath()
+    public static function iconPath ()
     {
-        return Craft::getAlias("@jmx2/picpuller/assetbundles/latestimagewidget/dist/img/LatestImage-icon.svg");
+        return Craft::getAlias ( "@jmx2/picpuller/assetbundles/instagramstatuswidget/dist/img/InstagramStatus-icon.svg" );
     }
 
     /**
@@ -67,7 +67,7 @@ class Stats extends Widget
      *
      * @return int|null The widget’s maximum colspan, if it has one
      */
-    public static function maxColspan()
+    public static function maxColspan ()
     {
         return null;
     }
@@ -75,23 +75,26 @@ class Stats extends Widget
     // Public Methods
     // =========================================================================
 
-
     /**
+     * Returns the validation rules for attributes.
+     *
+     * Validation rules are used by [[validate()]] to check if attribute values are valid.
+     * Child classes may override this method to declare different validation rules.
+     *
+     *
+     * /**
      * Returns the widget's body HTML.
      *
      * @return string|false The widget’s body HTML, or `false` if the widget
      *                      should not be visible. (If you don’t want the widget
      *                      to be selectable in the first place, use {@link isSelectable()}.)
      */
-    public function getBodyHtml()
+    public function getBodyHtml ()
     {
-        Craft::$app->getView()->registerAssetBundle(LatestImageWidgetAsset::class);
+        Craft::$app->getView ()->registerAssetBundle ( LatestImageWidgetAsset::class );
 
-        return Craft::$app->getView()->renderTemplate(
-            'pic-puller/_components/widgets/Stats_body',
-            [
-                'message' => $this->message
-            ]
+        return Craft::$app->getView ()->renderTemplate (
+            'pic-puller/_components/widgets/Stats_body'
         );
     }
 }

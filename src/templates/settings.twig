@@ -12,7 +12,7 @@
  */
 #}
 {# @var craft \craft\web\twig\variables\CraftVariable #}
-{# @var picpuller jmx2\picpuller #}
+{# @var picpuller \jmx2\picpuller\variables\PicPullerVariable #}
 
 {% import "_includes/forms" as forms %}
 
@@ -23,8 +23,7 @@
     instructions: 'Enter an alternate short name for the Pic Puller plugin, like "PPfC" or "Instagram".',
     id: 'shortName',
     name: 'shortName',
-    value: settings['shortName']})
-}}
+    value: settings['shortName']}) }}
 
 {# Check to see if this it the Pro edition #}
 {% if craft.app.getEdition() == 2 %}
@@ -52,8 +51,7 @@
         autofocus: false,
         required: false,
         errors: ppShareoauth ? false : false
-     })
-    }}
+    }) }}
 
 
     {# Get all admin level users only #}
@@ -81,7 +79,6 @@
         value: ppSharedoauthuser,
         id: 'sharedoauthuser',
         name: 'sharedoauthuser'
-    })
-    }}
+    }) }}
 
 {% endif %}

@@ -80,14 +80,14 @@ class Feed extends Component
         // set up the USERS url used by Instagram
         $query_string = "users/$ig_user_id?access_token={$oauth}";
 
-        $data = $this->_fetch_data($query_string, $use_stale_cache);
+        $data = $this->_fetch_data ( $query_string , $use_stale_cache );
 
-        if ($data['status'] === FALSE ) {
+        if ($data['status'] === false) {
             // No images to return, even from cache, so exit the function and return the error
             // Set up the basic error messages returned by _fetch_data function
             $variables[] = [
-                $this->_ig_picpuller_prefix.'error_type' => $data['error_type'],
-                $this->_ig_picpuller_prefix.'error_message' => $data['error_message'],
+                $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
+                $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
                 $this->_ig_picpuller_prefix.'status' => $data['status']
             ];
             return $variables;
@@ -97,18 +97,18 @@ class Feed extends Component
 
         $node = $data['data'];
         $variables[] = [
-            $this->_ig_picpuller_prefix.'username' => $node['username'],
-            $this->_ig_picpuller_prefix.'bio' => $node['bio'],
-            $this->_ig_picpuller_prefix.'profile_picture' => $node['profile_picture'],
-            $this->_ig_picpuller_prefix.'website' => $node['website'],
-            $this->_ig_picpuller_prefix.'full_name' => $node['full_name'],
-            $this->_ig_picpuller_prefix.'counts_media' => (string)$node['counts']['media'],
-            $this->_ig_picpuller_prefix.'counts_followed_by' => (string)$node['counts']['followed_by'],
-            $this->_ig_picpuller_prefix.'counts_follows' => (string)$node['counts']['follows'],
-            $this->_ig_picpuller_prefix.'id' => $node['id'],
-            $this->_ig_picpuller_prefix.'status' => $data['status'],
-            $this->_ig_picpuller_prefix.'cacheddata' => $cacheddata,
-            $this->_ig_picpuller_prefix.'error_type' => $data['error_type'],
+            $this->_ig_picpuller_prefix.'username' => $node['username'] ,
+            $this->_ig_picpuller_prefix.'bio' => $node['bio'] ,
+            $this->_ig_picpuller_prefix.'profile_picture' => $node['profile_picture'] ,
+            $this->_ig_picpuller_prefix.'website' => $node['website'] ,
+            $this->_ig_picpuller_prefix.'full_name' => $node['full_name'] ,
+            $this->_ig_picpuller_prefix.'counts_media' => (string)$node['counts']['media'] ,
+            $this->_ig_picpuller_prefix.'counts_followed_by' => (string)$node['counts']['followed_by'] ,
+            $this->_ig_picpuller_prefix.'counts_follows' => (string)$node['counts']['follows'] ,
+            $this->_ig_picpuller_prefix.'id' => $node['id'] ,
+            $this->_ig_picpuller_prefix.'status' => $data['status'] ,
+            $this->_ig_picpuller_prefix.'cacheddata' => $cacheddata ,
+            $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
             $this->_ig_picpuller_prefix.'error_message' => $data['error_message']
         ];
         return $variables;
@@ -126,7 +126,7 @@ class Feed extends Component
      * @return array
      *
      */
-    public function media($tags = null)
+    public function media ($tags = null)
     {
         Craft::info ( "Pic Puller media function" );
         $variables = [];
@@ -145,31 +145,30 @@ class Feed extends Component
         }
 
         // media_id is required for this function
-        $media_id = isset($tags['media_id']) ? $tags['media_id'] : '';
-        if($media_id == '')
-        {
+        $media_id = isset( $tags['media_id'] ) ? $tags['media_id'] : '';
+        if ($media_id == '') {
             $variables[] = [
-                $this->_ig_picpuller_prefix.'code' => '000',
-                $this->_ig_picpuller_prefix.'error_type' => 'MissingReqParameter',
-                $this->_ig_picpuller_prefix.'error_message' => 'No media_id set for this function',
-                $this->_ig_picpuller_prefix.'status' => FALSE
+                $this->_ig_picpuller_prefix.'code' => '000' ,
+                $this->_ig_picpuller_prefix.'error_type' => 'MissingReqParameter' ,
+                $this->_ig_picpuller_prefix.'error_message' => 'No media_id set for this function' ,
+                $this->_ig_picpuller_prefix.'status' => false
             ];
             return $variables;
         }
 
         // set up the MEDIA url used by Instagram
         $query_string = "media/{$media_id}?access_token={$oauth}";
-        $data = $this->_fetch_data($query_string, $use_stale_cache);
+        $data = $this->_fetch_data ( $query_string , $use_stale_cache );
 
-        if ($data['status'] != TRUE ) {
+        if ($data['status'] != true) {
             // No images to return, even from cache, so exit the function and return the error
             // Set up the basic error messages returned by _fetch_data function
-            $variables[] = array(
-                $this->_ig_picpuller_prefix.'code' => $data['code'] ? $data['code'] : '000',
-                $this->_ig_picpuller_prefix.'error_type' => $data['error_type'],
-                $this->_ig_picpuller_prefix.'error_message' => $data['error_message'],
+            $variables[] = [
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ? $data['code'] : '000' ,
+                $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
+                $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
                 $this->_ig_picpuller_prefix.'status' => $data['status'] ? 1 : 0
-            );
+            ];
             return $variables;
         }
         $cacheddata = isset( $data['cacheddata'] ) ? true : false;
@@ -178,55 +177,54 @@ class Feed extends Component
         // This is preparing a special version of the caption to return
         // Take the caption and remove everything after the beginning of the first
         // hashtag. This will be returned in a "caption_only" variable below.
-        if( isset($node['caption']['text']) ) {
+        if (isset( $node['caption']['text'] )) {
             $caption = $node['caption']['text'];
             $titletohashpattern = '/^[^#]*(?!#)/';
-            preg_match($titletohashpattern, $caption, $captionTitle);
+            preg_match ( $titletohashpattern , $caption , $captionTitle );
         }
 
         // these are the hashtags for an Instagram post
         $tags = $node['tags'];
 
-        $variables[] = array(
-            $this->_ig_picpuller_prefix.'type' => $node['type'],
-            $this->_ig_picpuller_prefix.'video_low_bandwidth' => $node['videos']['low_bandwidth']['url'] ?? '',
-            $this->_ig_picpuller_prefix.'video_low_bandwidth_width' => $node['videos']['low_bandwidth']['width'] ?? '',
-            $this->_ig_picpuller_prefix.'video_low_bandwidth_height' => $node['videos']['low_bandwidth']['height'] ?? '',
-            $this->_ig_picpuller_prefix.'video_low_resolution' => $node['videos']['low_resolution']['url'] ?? '',
-            $this->_ig_picpuller_prefix.'video_low_resolution_width' => $node['videos']['low_resolution']['width'] ?? '',
-            $this->_ig_picpuller_prefix.'video_low_resolution_height' => $node['videos']['low_resolution']['height'] ?? '',
-            $this->_ig_picpuller_prefix.'video_standard_resolution' => $node['videos']['standard_resolution']['url'] ?? '',
-            $this->_ig_picpuller_prefix.'video_standard_resolution_width' => $node['videos']['standard_resolution']['width'] ?? '',
-            $this->_ig_picpuller_prefix.'video_standard_resolution_height' => $node['videos']['standard_resolution']['height'] ?? '',
-            $this->_ig_picpuller_prefix.'username' => $node['user']['username'],
-            $this->_ig_picpuller_prefix.'user_id' => $node['user']['id'],
-            $this->_ig_picpuller_prefix.'full_name' => $node['user']['full_name'],
-            $this->_ig_picpuller_prefix.'profile_picture' => $node['user']['profile_picture'],
-            $this->_ig_picpuller_prefix.'created_time' => $node['created_time'],
-            $this->_ig_picpuller_prefix.'link' => $node['link'],
-            $this->_ig_picpuller_prefix.'caption' => $caption ?? '',
+        $variables[] = [
+            $this->_ig_picpuller_prefix.'type' => $node['type'] ,
+            $this->_ig_picpuller_prefix.'video_low_bandwidth' => $node['videos']['low_bandwidth']['url'] ?? '' ,
+            $this->_ig_picpuller_prefix.'video_low_bandwidth_width' => $node['videos']['low_bandwidth']['width'] ?? '' ,
+            $this->_ig_picpuller_prefix.'video_low_bandwidth_height' => $node['videos']['low_bandwidth']['height'] ?? '' ,
+            $this->_ig_picpuller_prefix.'video_low_resolution' => $node['videos']['low_resolution']['url'] ?? '' ,
+            $this->_ig_picpuller_prefix.'video_low_resolution_width' => $node['videos']['low_resolution']['width'] ?? '' ,
+            $this->_ig_picpuller_prefix.'video_low_resolution_height' => $node['videos']['low_resolution']['height'] ?? '' ,
+            $this->_ig_picpuller_prefix.'video_standard_resolution' => $node['videos']['standard_resolution']['url'] ?? '' ,
+            $this->_ig_picpuller_prefix.'video_standard_resolution_width' => $node['videos']['standard_resolution']['width'] ?? '' ,
+            $this->_ig_picpuller_prefix.'video_standard_resolution_height' => $node['videos']['standard_resolution']['height'] ?? '' ,
+            $this->_ig_picpuller_prefix.'username' => $node['user']['username'] ,
+            $this->_ig_picpuller_prefix.'user_id' => $node['user']['id'] ,
+            $this->_ig_picpuller_prefix.'full_name' => $node['user']['full_name'] ,
+            $this->_ig_picpuller_prefix.'profile_picture' => $node['user']['profile_picture'] ,
+            $this->_ig_picpuller_prefix.'created_time' => $node['created_time'] ,
+            $this->_ig_picpuller_prefix.'link' => $node['link'] ,
+            $this->_ig_picpuller_prefix.'caption' => $caption ?? '' ,
             $this->_ig_picpuller_prefix.'caption_only' => $captionTitle[0] ?? '' ,
-            $this->_ig_picpuller_prefix.'tags' => isset($tags) ? $tags : array() ,
-            $this->_ig_picpuller_prefix.'low_resolution' => $node['images']['low_resolution']['url'],
-            $this->_ig_picpuller_prefix.'low_resolution_width' => $node['images']['low_resolution']['width'] ?? '',
-            $this->_ig_picpuller_prefix.'low_resolution_height' => $node['images']['low_resolution']['height'] ?? '',
-            $this->_ig_picpuller_prefix.'thumbnail' => $node['images']['thumbnail']['url'],
-            $this->_ig_picpuller_prefix.'thumbnail_width' => $node['images']['thumbnail']['width'] ?? '',
-            $this->_ig_picpuller_prefix.'thumbnail_height' => $node['images']['thumbnail']['height'] ?? '',
-            $this->_ig_picpuller_prefix.'standard_resolution' => $node['images']['standard_resolution']['url'],
-            $this->_ig_picpuller_prefix.'standard_resolution_width' => $node['images']['standard_resolution']['width'] ?? '',
-            $this->_ig_picpuller_prefix.'standard_resolution_height' => $node['images']['standard_resolution']['height'] ?? '',
-            $this->_ig_picpuller_prefix.'latitude' => $node['location']['latitude'] ?? '',
-            $this->_ig_picpuller_prefix.'longitude' => $node['location']['longitude'] ?? '',
-            $this->_ig_picpuller_prefix.'comment_count' => $node['comments']['count'],
-            $this->_ig_picpuller_prefix.'likes' => $node['likes']['count'],
-            $this->_ig_picpuller_prefix.'cacheddata' => $cacheddata,
-            $this->_ig_picpuller_prefix.'error_type' => $data['error_type'],
-            $this->_ig_picpuller_prefix.'error_message' => $data['error_message'],
+            $this->_ig_picpuller_prefix.'tags' => isset( $tags ) ? $tags : [] ,
+            $this->_ig_picpuller_prefix.'low_resolution' => $node['images']['low_resolution']['url'] ,
+            $this->_ig_picpuller_prefix.'low_resolution_width' => $node['images']['low_resolution']['width'] ?? '' ,
+            $this->_ig_picpuller_prefix.'low_resolution_height' => $node['images']['low_resolution']['height'] ?? '' ,
+            $this->_ig_picpuller_prefix.'thumbnail' => $node['images']['thumbnail']['url'] ,
+            $this->_ig_picpuller_prefix.'thumbnail_width' => $node['images']['thumbnail']['width'] ?? '' ,
+            $this->_ig_picpuller_prefix.'thumbnail_height' => $node['images']['thumbnail']['height'] ?? '' ,
+            $this->_ig_picpuller_prefix.'standard_resolution' => $node['images']['standard_resolution']['url'] ,
+            $this->_ig_picpuller_prefix.'standard_resolution_width' => $node['images']['standard_resolution']['width'] ?? '' ,
+            $this->_ig_picpuller_prefix.'standard_resolution_height' => $node['images']['standard_resolution']['height'] ?? '' ,
+            $this->_ig_picpuller_prefix.'latitude' => $node['location']['latitude'] ?? '' ,
+            $this->_ig_picpuller_prefix.'longitude' => $node['location']['longitude'] ?? '' ,
+            $this->_ig_picpuller_prefix.'comment_count' => $node['comments']['count'] ,
+            $this->_ig_picpuller_prefix.'likes' => $node['likes']['count'] ,
+            $this->_ig_picpuller_prefix.'cacheddata' => $cacheddata ,
+            $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
+            $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
             $this->_ig_picpuller_prefix.'status' => $data['status']
-        );
+        ];
         return $variables;
-
     }
 
     /**
@@ -239,9 +237,9 @@ class Feed extends Component
      *
      * @return array
      */
-    public function media_recent($tags = null)
+    public function media_recent ($tags = null)
     {
-        Craft::info('Pic Puller: media_recent');
+        Craft::info ( 'Pic Puller: media_recent' );
         $variables = [];
         $user_id = $tags['user_id'] ?? null;
 
@@ -252,105 +250,100 @@ class Feed extends Component
 
         $use_stale_cache = $tags['use_stale_cache'] ?? $this->use_stale_cache;
 
-        $limit = isset($tags['limit']) ? $tags['limit'] : '';
+        $limit = isset( $tags['limit'] ) ? $tags['limit'] : '';
         $limit = $tags['limit'] ?? null;
 
-        if($limit)
-        {
+        if ($limit) {
             $limit = "&count=$limit";
         }
 
         $min_id = $tags['min_id'] ?? null;
 
-        if($min_id)
-        {
+        if ($min_id) {
             $min_id = "&min_id=$min_id";
         }
 
         $max_id = $tags['max_id'] ?? null;
 
-        if($max_id)
-        {
+        if ($max_id) {
             $max_id = "&max_id=$max_id";
         }
 
-        $oauth = $this->_getUserOauth($user_id);
+        $oauth = $this->_getUserOauth ( $user_id );
 
-        if(!$oauth)
-        {
-            return $this->_unauthorizedUserErrorReturn();
+        if (!$oauth) {
+            return $this->_unauthorizedUserErrorReturn ();
         }
 
-        $ig_user_id = $this->_getInstagramId($user_id);
+        $ig_user_id = $this->_getInstagramId ( $user_id );
         // set up the MEDIA/RECENT url used by Instagram
-        $query_string = "users/{$ig_user_id}/media/recent/?access_token={$oauth}". $limit.$max_id.$min_id;
+        $query_string = "users/{$ig_user_id}/media/recent/?access_token={$oauth}".$limit.$max_id.$min_id;
 
-        $data = $this->_fetch_data($query_string, $use_stale_cache);
+        $data = $this->_fetch_data ( $query_string , $use_stale_cache );
 
-        if ($data['status'] === FALSE ) {
+        if ($data['status'] === false) {
             // No images to return, even from cache, so exit the function and return the error
             // Set up the basic error messages returned by _fetch_data function
-            $variables[] = array(
-                $this->_ig_picpuller_prefix.'error_type' => $data['error_type'],
-                $this->_ig_picpuller_prefix.'error_message' => $data['error_message'],
+            $variables[] = [
+                $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
+                $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
                 $this->_ig_picpuller_prefix.'status' => $data['status']
-            );
+            ];
             return $variables;
         }
 
         $next_max_id = '';
-        if (isset($data['pagination']['next_max_id'])){
+        if (isset( $data['pagination']['next_max_id'] )) {
             $next_max_id = $data['pagination']['next_max_id'];
         }
 
         $cacheddata = isset( $data['cacheddata'] ) ? true : false;
 
-        foreach($data['data'] as $node)
-        {
-            if( isset($node['caption']['text']) ) {
+        foreach ($data['data'] as $node) {
+            if (isset( $node['caption']['text'] )) {
                 $caption = $node['caption']['text'];
                 $titletohashpattern = '/^[^#]*(?!#)/';
-                preg_match($titletohashpattern, $caption, $captionTitle);
+                preg_match ( $titletohashpattern , $caption , $captionTitle );
             }
 
             $tags = $node['tags'];
 
-            $variables[] = array(
-                $this->_ig_picpuller_prefix.'type' => $node['type'],
-                $this->_ig_picpuller_prefix.'video_low_bandwidth' => $node['videos']['low_bandwidth']['url'] ?? '',
-                $this->_ig_picpuller_prefix.'video_low_bandwidth_width' => $node['videos']['low_bandwidth']['width'] ?? '',
-                $this->_ig_picpuller_prefix.'video_low_bandwidth_height' => $node['videos']['low_bandwidth']['height'] ?? '',
-                $this->_ig_picpuller_prefix.'video_low_resolution' => $node['videos']['low_resolution']['url'] ?? '',
-                $this->_ig_picpuller_prefix.'video_low_resolution_width' => $node['videos']['low_resolution']['width'] ?? '',
-                $this->_ig_picpuller_prefix.'video_low_resolution_height' => $node['videos']['low_resolution']['height'] ?? '',
-                $this->_ig_picpuller_prefix.'video_standard_resolution' => $node['videos']['standard_resolution']['url'] ?? '',
-                $this->_ig_picpuller_prefix.'video_standard_resolution_width' => $node['videos']['standard_resolution']['width'] ?? '',
-                $this->_ig_picpuller_prefix.'video_standard_resolution_height' => $node['videos']['standard_resolution']['height'] ?? '',
-                $this->_ig_picpuller_prefix.'created_time' => $node['created_time'],
-                $this->_ig_picpuller_prefix.'link' => $node['link'],
-                $this->_ig_picpuller_prefix.'caption' => $caption ?? '',
+            $variables[] = [
+                $this->_ig_picpuller_prefix.'type' => $node['type'] ,
+                $this->_ig_picpuller_prefix.'video_low_bandwidth' => $node['videos']['low_bandwidth']['url'] ?? '' ,
+                $this->_ig_picpuller_prefix.'video_low_bandwidth_width' => $node['videos']['low_bandwidth']['width'] ?? '' ,
+                $this->_ig_picpuller_prefix.'video_low_bandwidth_height' => $node['videos']['low_bandwidth']['height'] ?? '' ,
+                $this->_ig_picpuller_prefix.'video_low_resolution' => $node['videos']['low_resolution']['url'] ?? '' ,
+                $this->_ig_picpuller_prefix.'video_low_resolution_width' => $node['videos']['low_resolution']['width'] ?? '' ,
+                $this->_ig_picpuller_prefix.'video_low_resolution_height' => $node['videos']['low_resolution']['height'] ?? '' ,
+                $this->_ig_picpuller_prefix.'video_standard_resolution' => $node['videos']['standard_resolution']['url'] ?? '' ,
+                $this->_ig_picpuller_prefix.'video_standard_resolution_width' => $node['videos']['standard_resolution']['width'] ?? '' ,
+                $this->_ig_picpuller_prefix.'video_standard_resolution_height' => $node['videos']['standard_resolution']['height'] ?? '' ,
+                $this->_ig_picpuller_prefix.'created_time' => $node['created_time'] ,
+                $this->_ig_picpuller_prefix.'link' => $node['link'] ,
+                $this->_ig_picpuller_prefix.'caption' => $caption ?? '' ,
                 $this->_ig_picpuller_prefix.'caption_only' => $captionTitle[0] ?? '' ,
                 $this->_ig_picpuller_prefix.'tags' => $tags ?? [] ,
-                $this->_ig_picpuller_prefix.'low_resolution' => $node['images']['low_resolution']['url'],
-                $this->_ig_picpuller_prefix.'low_resolution_width' => $node['images']['low_resolution']['width'] ?? '',
-                $this->_ig_picpuller_prefix.'low_resolution_height' => $node['images']['low_resolution']['height'] ?? '',
-                $this->_ig_picpuller_prefix.'thumbnail' => $node['images']['thumbnail']['url'],
-                $this->_ig_picpuller_prefix.'thumbnail_width' => $node['images']['thumbnail']['width'] ?? '',
-                $this->_ig_picpuller_prefix.'thumbnail_height' => $node['images']['thumbnail']['height'] ?? '',
-                $this->_ig_picpuller_prefix.'standard_resolution' => $node['images']['standard_resolution']['url'],
-                $this->_ig_picpuller_prefix.'standard_resolution_width' => $node['images']['standard_resolution']['width'] ?? '',
-                $this->_ig_picpuller_prefix.'standard_resolution_height' => $node['images']['standard_resolution']['height'] ?? '',
-                $this->_ig_picpuller_prefix.'latitude' => $node['location']['latitude'] ?? '',
-                $this->_ig_picpuller_prefix.'longitude' => $node['location']['longitude'] ?? '',
-                $this->_ig_picpuller_prefix.'media_id' => $node['id'],
-                $this->_ig_picpuller_prefix.'next_max_id' => $next_max_id,
-                $this->_ig_picpuller_prefix.'comment_count' => $node['comments']['count'],
-                $this->_ig_picpuller_prefix.'likes' => $node['likes']['count'],
-                $this->_ig_picpuller_prefix.'cacheddata' => $cacheddata,
-                $this->_ig_picpuller_prefix.'error_type' => $data['error_type'],
-                $this->_ig_picpuller_prefix.'error_message' => $data['error_message'],
+                $this->_ig_picpuller_prefix.'low_resolution' => $node['images']['low_resolution']['url'] ,
+                $this->_ig_picpuller_prefix.'low_resolution_width' => $node['images']['low_resolution']['width'] ?? '' ,
+                $this->_ig_picpuller_prefix.'low_resolution_height' => $node['images']['low_resolution']['height'] ?? '' ,
+                $this->_ig_picpuller_prefix.'thumbnail' => $node['images']['thumbnail']['url'] ,
+                $this->_ig_picpuller_prefix.'thumbnail_width' => $node['images']['thumbnail']['width'] ?? '' ,
+                $this->_ig_picpuller_prefix.'thumbnail_height' => $node['images']['thumbnail']['height'] ?? '' ,
+                $this->_ig_picpuller_prefix.'standard_resolution' => $node['images']['standard_resolution']['url'] ,
+                $this->_ig_picpuller_prefix.'standard_resolution_width' => $node['images']['standard_resolution']['width'] ?? '' ,
+                $this->_ig_picpuller_prefix.'standard_resolution_height' => $node['images']['standard_resolution']['height'] ?? '' ,
+                $this->_ig_picpuller_prefix.'latitude' => $node['location']['latitude'] ?? '' ,
+                $this->_ig_picpuller_prefix.'longitude' => $node['location']['longitude'] ?? '' ,
+                $this->_ig_picpuller_prefix.'media_id' => $node['id'] ,
+                $this->_ig_picpuller_prefix.'next_max_id' => $next_max_id ,
+                $this->_ig_picpuller_prefix.'comment_count' => $node['comments']['count'] ,
+                $this->_ig_picpuller_prefix.'likes' => $node['likes']['count'] ,
+                $this->_ig_picpuller_prefix.'cacheddata' => $cacheddata ,
+                $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
+                $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
                 $this->_ig_picpuller_prefix.'status' => $data['status']
-            );
+            ];
         }
         return $variables;
     }
@@ -371,7 +364,7 @@ class Feed extends Component
         $options = [
             'debug' => false ,
             'exceptions' => true ,
-            'http_errors' => true,
+            'http_errors' => true ,
             'CURLOPT_RETURNTRANSFER' => 1 ,
             'CURLOPT_SSL_VERIFYPEER' => true ,
             'CURLOPT_TIMEOUT_MS' => 1000 ,
@@ -383,23 +376,20 @@ class Feed extends Component
         try {
             $response = $client->request ( 'GET' , $requestUrl , $options );
             $body = Json::decodeIfJson ( $response->getBody () );
-            return $this->_validate_data ($body, $url, $use_stale_cache);
-
+            return $this->_validate_data ( $body , $url , $use_stale_cache );
         } catch (RequestException $exception) {
-            if ($exception->hasResponse()) {
-                $failedResponse = Json::decodeIfJson ( $exception->getResponse()->getBody()->getContents () );
+            if ($exception->hasResponse ()) {
+                $failedResponse = Json::decodeIfJson ( $exception->getResponse ()->getBody ()->getContents () );
                 $failedResponse = $failedResponse['meta'];
                 $error['status'] = false;
                 $error['code'] = $failedResponse['code'] ? $failedResponse['code'] : 'unknown';
                 $error['error_type'] = $failedResponse['error_type'] ? $failedResponse['error_type'] : 'HTTP_error';
                 $error['error_message'] = $failedResponse['error_message'] ? $failedResponse['error_message'] : 'The Instagram API did not return a response.';
-
             } else {
                 $error['status'] = false;
-                $error['code'] =  '503';
-                $error['error_type'] =  'HTTP_error';
-                $error['error_message'] = $e->getMessage() ? $e->getMessage() : 'The Instagram API did not return a response.';
-
+                $error['code'] = '503';
+                $error['error_type'] = 'HTTP_error';
+                $error['error_message'] = $e->getMessage () ? $e->getMessage () : 'The Instagram API did not return a response.';
             }
 
             return $error;
@@ -428,7 +418,7 @@ class Feed extends Component
             // Pic Puller considers that an error so it returns a custom error message
             if (count ( $data['data'] ) == 0) {
                 $error_array = [
-                    'code' => $meta['code'],
+                    'code' => $meta['code'] ,
                     'status' => false ,
                     'error_message' => "There was no media to return for that user." ,
                     'error_type' => 'NoData'
@@ -468,8 +458,8 @@ class Feed extends Component
                     $data['code'] = $meta['code'] ?? '000';
                     $error_array = [
                         'status' => false ,
-                        'code' => $meta['code'] ?? '000',
-                        'error_message' => $meta['error_message'] ?? 'No error message provided by Instagram. No cached data available.',
+                        'code' => $meta['code'] ?? '000' ,
+                        'error_message' => $meta['error_message'] ?? 'No error message provided by Instagram. No cached data available.' ,
                         'error_type' => $meta['error_type'] ?? 'NoCodeReturned'
                     ];
                 }
@@ -495,24 +485,25 @@ class Feed extends Component
     /**
      * This is a replacement for the old checking of cache using Yii2 built in
      * behavior
-     * @param $url the URL is the $key that will be passed into the getOrSet
+     *
+     * @param $url     the URL is the $key that will be passed into the getOrSet
      *                 function
      */
-    private function _check_cache($url)
+    private function _check_cache ($url)
     {
         $cache = Craft::$app->getCache ();
-        $key = md5($url);
-        $data = $cache->get ($key);
+        $key = md5 ( $url );
+        $data = $cache->get ( $key );
 
-        return Json::decodeIfJson ($data);
+        return Json::decodeIfJson ( $data );
     }
 
 
     private function _write_cache ($data , $url)
     {
         $cache = Craft::$app->getCache ();
-        $key = md5($url);
-        $cache->set ($key, $data);
+        $key = md5 ( $url );
+        $cache->set ( $key , $data );
     }
 
     /**

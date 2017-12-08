@@ -4,8 +4,8 @@
 {% set title = "Pic Puller for Craft"|t %}
 
 {% set content %}
-    {% else %}
-        <p>ERROR: If you were trying to authenticate an Instagram application the proper values were not passed to this page that are needed to proceed.</p    {% if craft.app.request.getParam('oauth') != '' %}
+
+    {% if craft.app.request.getParam('oauth') != '' %}
         <h2>Success!</h2>
         <div id='message'>Loading...</div>
         {% set saveAuthToPPdatabase %}
@@ -31,7 +31,11 @@
 
         {% endset %}
 
-        {% js saveAuthToPPdatabase %}>
+        {% js saveAuthToPPdatabase %}
+
+
+    {% else %}
+        <p>ERROR: If you were trying to authenticate an Instagram application the proper values were not passed to this page that are needed to proceed.</p>
     {% endif %}
 
     <p><a href="{{ url('pic-puller') }}" class='btn' title='Return to Pic Puller'>Return to Pic Puller</a></p>

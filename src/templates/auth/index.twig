@@ -1,13 +1,11 @@
 {% extends "_layouts/cp" %}
-{# @var craft \craft\web\twig\variables\CraftVariable #}
-{# @var picPuller \jmx2\picpuller\variables\PicPullerVariable #}
 {% do view.registerAssetBundle("jmx2\\picpuller\\assetbundles\\picpuller\\PicPullerAsset") %}
 
 {% set title = "Pic Puller for Craft"|t %}
 
 {% set content %}
-
-    {% if craft.app.request.getParam('oauth') != '' %}
+    {% else %}
+        <p>ERROR: If you were trying to authenticate an Instagram application the proper values were not passed to this page that are needed to proceed.</p    {% if craft.app.request.getParam('oauth') != '' %}
         <h2>Success!</h2>
         <div id='message'>Loading...</div>
         {% set saveAuthToPPdatabase %}
@@ -18,32 +16,23 @@
             {{ craft.app.config.general.csrfTokenName }}: "{{ craft.app.request.getParam( craft.app.config.general.csrfTokenName ) }}"
             }
             Craft.postActionRequest('pic-puller/default/save-credentials', data, function(response) {
-            {#console.log('I heard back from the post action');#}
-            {#console.log("response:", response);#}
-            if( (typeof(response) !== "undefined") && (response.success === true) ) {
-            $("#message").html("<p>Authentication is complete.</p>");
-            }
-            else
-            {
-            // What happens when there is an instagram error? fix this
-            $("#message").html("<p>An error was returned.</p><p><em>" +
-                response.error_type + ": " +response.message + "</em></p>");
-            $("#message").html("<p>An error occurred. Authorization data was not
-            saved.</p>");
-            }
+                console.log('I heard back from the post action');
+                console.log("response:", response);
+                if( (typeof(response) !== "undefined") && (response.success === true) ) {
+                    $("#message").html("<p>Authentication is complete.</p>");
+                }
+                else
+                {
+                 // What happens when there is an instagram error? fix this
+                 $("#message").html("<p>An error was returned.</p><p><em>" + response.error_type + ": " +response.message + "</em></p>");
+                    $("#message").html("<p>An error occurred. Authorization data was not saved.</p>");
+                }
             })
 
         {% endset %}
 
-        {% js saveAuthToPPdatabase %}
-
-
-    {% else %}
-        <p>ERROR: If you were trying to authenticate an Instagram application
-            the proper values were not passed to this page that are needed to
-            proceed.</p>
+        {% js saveAuthToPPdatabase %}>
     {% endif %}
 
-    <p><a href="{{ craft.picPuller.getPicPullerBaseUrl() }}" class='btn'
-          title='Return to Pic Puller'>Return to Pic Puller</a></p>
+    <p><a href="{{ url('pic-puller') }}" class='btn' title='Return to Pic Puller'>Return to Pic Puller</a></p>
 {% endset %}

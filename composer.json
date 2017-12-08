@@ -11,8 +11,8 @@
         "pic puller"
     ],
     "support": {
-        "docs": "???",
-        "issues": "???"
+        "docs": "https://github.com/johnfmorton/picpuller-for-craft3/blob/master/PicPullerDocumentation.md",
+        "issues": "https://github.com/johnfmorton/picpuller-for-craft3/issues"
     },
     "license": "MIT",
     "authors": [
@@ -38,7 +38,7 @@
     "extra": {
         "name": "Pic Puller",
         "handle": "pic-puller",
-        "changelogUrl": "???",
+        "changelogUrl": "https://github.com/johnfmorton/picpuller-for-craft3/blob/master/CHANGELOG.md",
         "class": "jmx2\\picpuller\\PicPuller"
     }
 }

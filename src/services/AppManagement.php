@@ -114,7 +114,7 @@ class AppManagement extends Component
     {
         $query = (new Query())
             ->select ( 'instagram_id' )
-            ->from ( 'picpuller_authorizations' )
+            ->from ( '{{%picpuller_authorizations}}' )
             ->where ( 'craft_user_id='.$craft_user_id )
             ->one ();
         return $query['instagram_id'];
@@ -145,7 +145,7 @@ class AppManagement extends Component
     {
         $allUsers = (new Query())
             ->select ( 'craft_user_id, instagram_id, instagram_oauth, u.firstName, u.lastName, u.username' )
-            ->from ( 'picpuller_authorizations oauth' )
+            ->from ( '{{%picpuller_authorizations}} oauth' )
             ->join ( 'INNER JOIN' , 'users u' , 'oauth.craft_user_id=u.id' )
             ->orderBy ( 'u.id' )
             ->all ();

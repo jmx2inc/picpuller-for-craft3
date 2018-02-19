@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.5 - 2018-02-19
+### Fixed
+- The /services/AppManagement.php wasn't using the table prefix and has been updated to fix this bug.
+
+## 3.0.4 - 2017-12-08
+### Fixed
+- Removed unneeded 2nd copy of License file
+
+## 3.0.3 - 2017-12-08
+### Fixed
+- Tweak to composer.json
+
+## 3.0.2 - 2017-12-08
+### Fixed
+- A fix for the previously botched fixed for the authentication JS.
+
 ## 3.0.0 - 2017-08-02
 ### Added
 - Initial release

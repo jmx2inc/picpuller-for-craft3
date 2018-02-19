@@ -35,15 +35,12 @@ class Feed extends Component
 {
     // This is the URL for v1 of the Instagram API
     const IG_API_URL = 'https://api.instagram.com/v1/';
-//     const IG_API_URL = 'https://api.instagramERRROR.com/v1/';
 
-    private $cache_name = 'picpuller';
     private $_ig_picpuller_prefix = '';
     private $use_stale_cache = true;
-    private $totalNumberCacheFiles = 50;
 
     // $refresh stores the amount of time we'll keep cached data (urls, not actual images) from Instagram
-    private $refresh = 1440;    // Period between cache refreshes, in minutes. 1440 is 24 hours.
+    // private $refresh = 1440;    // Period between cache refreshes, in minutes. 1440 is 24 hours.
 
     // Public Methods
     // =========================================================================

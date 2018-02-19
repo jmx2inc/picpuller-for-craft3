@@ -2,6 +2,7 @@
     "name": "jmx2/pic-puller",
     "description": "Integrate Instagram into Craft CMS.",
     "type": "craft-plugin",
+    "version": "3.0.5",
     "keywords": [
         "craft",
         "cms",

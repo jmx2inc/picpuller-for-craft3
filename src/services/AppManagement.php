@@ -136,6 +136,11 @@ class AppManagement extends Component
         }
     }
 
+    /**
+     * Retrieve all the users with Pic Puller authorizations in the database
+     *
+     * @return array
+     */
     public function getAllUsers ()
     {
         $allUsers = (new Query())

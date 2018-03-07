@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.6 - 2018-03-07
+### Fixed
+- The /services/AppManagement.php wasn't using the table prefix for the `users` table and has been updated to fix this bug.
+
 ## 3.0.5 - 2018-02-19
 ### Fixed
-- The /services/AppManagement.php wasn't using the table prefix and has been updated to fix this bug.
+- The /services/AppManagement.php wasn't using the table prefix for the `picpuller_authorizations` table and has been updated to fix this bug.
 
 ## 3.0.4 - 2017-12-08
 ### Fixed

@@ -2,7 +2,7 @@
     "name": "jmx2/pic-puller",
     "description": "Integrate Instagram into Craft CMS.",
     "type": "craft-plugin",
-    "version": "3.0.5",
+    "version": "3.0.6",
     "keywords": [
         "craft",
         "cms",
@@ -11,8 +11,8 @@
         "pic puller"
     ],
     "support": {
-        "docs": "https://github.com/johnfmorton/picpuller-for-craft3/blob/master/PicPullerDocumentation.md",
-        "issues": "https://github.com/johnfmorton/picpuller-for-craft3/issues"
+        "docs": "https://github.com/jmx2inc/picpuller-for-craft3/blob/master/PicPullerDocumentation.md",
+        "issues": "https://github.com/jmx2inc/picpuller-for-craft3/issues"
     },
     "license": "MIT",
     "authors": [
@@ -38,7 +38,7 @@
     "extra": {
         "name": "Pic Puller",
         "handle": "pic-puller",
-        "changelogUrl": "https://github.com/johnfmorton/picpuller-for-craft3/blob/master/CHANGELOG.md",
+        "changelogUrl": "https://github.com/jmx2inc/picpuller-for-craft3/blob/master/CHANGELOG.md",
         "class": "jmx2\\picpuller\\PicPuller"
     }
 }

@@ -146,7 +146,7 @@ class AppManagement extends Component
         $allUsers = (new Query())
             ->select ( 'craft_user_id, instagram_id, instagram_oauth, u.firstName, u.lastName, u.username' )
             ->from ( '{{%picpuller_authorizations}} oauth' )
-            ->join ( 'INNER JOIN' , 'users u' , 'oauth.craft_user_id=u.id' )
+            ->join ( 'INNER JOIN' , '{{%users}} u' , 'oauth.craft_user_id=u.id' )
             ->orderBy ( 'u.id' )
             ->all ();
         return $allUsers;

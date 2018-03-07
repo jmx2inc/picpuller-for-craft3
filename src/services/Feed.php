@@ -10,13 +10,12 @@
 
 namespace jmx2\picpuller\services;
 
+use Craft;
+use craft\base\Component;
 use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use jmx2\picpuller\PicPuller;
-
-use Craft;
-use craft\base\Component;
 
 /**
  * Feed Service

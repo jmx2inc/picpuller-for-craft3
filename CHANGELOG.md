@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.7 - 2018-03-15
+### Fixed
+- Applied the Craft license.
+
 ## 3.0.6 - 2018-03-07
 ### Fixed
 - The /services/AppManagement.php wasn't using the table prefix for the `users` table and has been updated to fix this bug.

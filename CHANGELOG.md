@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.8 - 2018-03-15
+### Fixed
+- License text fix.
+
 ## 3.0.7 - 2018-03-15
 ### Fixed
 - Applied the Craft license.

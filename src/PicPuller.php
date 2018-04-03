@@ -64,6 +64,9 @@ class PicPuller extends Plugin
      */
     public static $plugin;
 
+    // The actual version number is iin the composer.json file
+    // This is only the schema version. A change in scheme versioni
+    // trigger a database change.
     public $schemaVersion = '3.0.5';
     public $hasCpSettings = true;
     public $hasCpSection = true;

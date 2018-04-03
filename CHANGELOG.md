@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.9 - 2018-04-04
+### Fixed
+- Instagram feed has been missinig "meta" object for some users. This update is fixed to check for the presence of "meta". If missing it will attempt to serve stale cache if available. 
+
 ## 3.0.8 - 2018-03-15
 ### Fixed
 - License text fix.

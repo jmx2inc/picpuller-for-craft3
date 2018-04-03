@@ -407,7 +407,14 @@ class Feed extends Component
 
     private function _validate_data ($data , $url , $use_stale_cache)
     {
-        $meta = $data['meta'];
+        if ( array_key_exists('meta', $data) ){
+            $meta = $data['meta'];
+        } else {
+            // Sometimes the Instagram returns a malformed JSON object
+            // without the expected meta object
+            $meta['code'] = false;
+        }
+
         // meta > code equal to 200 means we have a successful request returned
         if ($meta['code'] == 200) {
             // There is an outlying chance that IG says 200, but the data array is empty.

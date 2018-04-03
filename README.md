@@ -28,6 +28,6 @@ Pic Puller integrates Instagram into Craft CMS. *Pic Puller for Craft* is an app
 
 ## Configuring Pic Puller
 
-See [_PicPullerDocumentation.md_](https://github.com/johnfmorton/picpuller-for-craft3/blob/master/PicPullerDocumentation.md) for full documentation.
+See [_PicPullerDocumentation.md_](https://github.com/jmx2inc/picpuller-for-craft3/blob/v3/PicPullerDocumentation.md) for full documentation.
 
 Brought to you by [John F Morton](https://picpuller.com)

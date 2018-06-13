@@ -138,9 +138,11 @@ user\_id: the Craft user id (*not* an Instagram user id)
 
 use\_stale\_cache: BOOLEAN, either TRUE or FALSE (defaults to TRUE if undefined), to have Pic Puller use previously cached data returned in the event of an error in retrieving new data
 
-**Tags returned in a successful Craft loop:**
+#### Tags returned in a successful Craft loop:
 
 status: a BOOLEAN of TRUE (1) is returned when Instagram media data is returned, *even if it is cached data*
+
+code: an HTTP status code when available. 200 indicates a normal HTTP response. See [a full list here](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 
 username: the Instagram username
 
@@ -169,6 +171,8 @@ error\_message: a string describing the *lack* of an error being returned
 #### Tags returned in an unsuccessful Craft loop:
 
 status: a BOOLEAN of FALSE (0) is returned when no data is returned from Instagram or there is no cache data to return
+
+code: an HTTP status code when available. 404 indicates a 'not found' response. Codes in the 500 range represent server errors. See [a full list here](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 
 error\_type: a single code word indicating the type of error ("MissingReqParameter", "UnauthorizedUser", "NoCodeReturned" issued by Pic Puller. Other error codes are passed through from Instagram.)
 
@@ -211,9 +215,11 @@ use\_stale\_cache: BOOLEAN, either TRUE or FALSE (defaults to TRUE if undefined)
 
 max\_id: an integer used to determine pagination of results. (See next\_max\_id in the ‘Tags returned’ below section for more information.)
 
-**Tags returned in a successful Craft loop:**
+#### Tags returned in a successful Craft loop:
 
 status: a BOOLEAN of TRUE (1) is returned when Instagram media data is returned, even if it is cached data
+
+code: an HTTP status code when available. 200 indicates a normal HTTP response. See [a full list here](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 
 type: returns a string "image" or "video"
 
@@ -281,6 +287,8 @@ error\_message: a string describing the *lack* of an error being returned
 
 status: a BOOLEAN of FALSE (0) is returned when no data is returned from Instagram or there is no cache data to return
 
+code: an HTTP status code when available. 404 indicates a 'not found' response. Codes in the 500 range represent server errors. See [a full list here](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
+
 error\_type: a single code word indicating the type of error ("MissingReqParameter", "UnauthorizedUser", "NoCodeReturned" issued by Pic Puller. Other error codes are passed through from Instagram.)
 
 error\_message: a string describing the error
@@ -327,9 +335,11 @@ media_id: this is the ID number that Instagram has assigned to an image or video
 
 use_stale_cache: BOOLEAN, either TRUE or FALSE (defaults to TRUE if undefined), to have Pic Puller use previously cached data returned in the event of an error in retrieving new data
 
-**Tags returned in a successful Craft loop:**
+#### Tags returned in a successful Craft loop:
 
 status: a BOOLEAN of TRUE (1) is returned when Instagram media data is returned, even if it is cached data
+
+code: an HTTP status code when available. 200 indicates a normal HTTP response. See [a full list here](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 
 created_time: time stamp of image creation time, Unix timestamp formatted
 
@@ -400,6 +410,8 @@ error_message: a string describing the error
 #### Tags returned in an unsuccessful Craft loop:
 
 status: a BOOLEAN of FALSE (0) is returned when no data is returned from Instagram or there is no cache data to return
+
+code: an HTTP status code when available. 404 indicates a 'not found' response. Codes in the 500 range represent server errors. See [a full list here](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 
 error_type: a single code word indicating the type of error ("MissingReqParameter", "UnauthorizedUser", "NoCodeReturned" issued by Pic Puller. Other error codes are passed through from Instagram.)
 

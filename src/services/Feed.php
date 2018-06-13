@@ -84,6 +84,7 @@ class Feed extends Component
             $variables[] = [
                 $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
                 $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ,
                 $this->_ig_picpuller_prefix.'status' => $data['status']
             ];
             return $variables;
@@ -94,6 +95,7 @@ class Feed extends Component
         $node = $data['data'];
         $variables[] = [
             $this->_ig_picpuller_prefix.'username' => $node['username'] ,
+            $this->_ig_picpuller_prefix.'code' => $data['code'] ?? 'unknown' ,
             $this->_ig_picpuller_prefix.'bio' => $node['bio'] ,
             $this->_ig_picpuller_prefix.'profile_picture' => $node['profile_picture'] ,
             $this->_ig_picpuller_prefix.'website' => $node['website'] ,
@@ -147,6 +149,7 @@ class Feed extends Component
                 $this->_ig_picpuller_prefix.'code' => '000' ,
                 $this->_ig_picpuller_prefix.'error_type' => 'MissingReqParameter' ,
                 $this->_ig_picpuller_prefix.'error_message' => 'No media_id set for this function' ,
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ,
                 $this->_ig_picpuller_prefix.'status' => false
             ];
             return $variables;
@@ -163,6 +166,7 @@ class Feed extends Component
                 $this->_ig_picpuller_prefix.'code' => $data['code'] ? $data['code'] : '000' ,
                 $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
                 $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ,
                 $this->_ig_picpuller_prefix.'status' => $data['status'] ? 1 : 0
             ];
             return $variables;
@@ -184,6 +188,7 @@ class Feed extends Component
 
         $variables[] = [
             $this->_ig_picpuller_prefix.'type' => $node['type'] ,
+            $this->_ig_picpuller_prefix.'code' => $data['code'] ?? 'unknown' ,
             $this->_ig_picpuller_prefix.'video_low_bandwidth' => $node['videos']['low_bandwidth']['url'] ?? '' ,
             $this->_ig_picpuller_prefix.'video_low_bandwidth_width' => $node['videos']['low_bandwidth']['width'] ?? '' ,
             $this->_ig_picpuller_prefix.'video_low_bandwidth_height' => $node['videos']['low_bandwidth']['height'] ?? '' ,
@@ -283,6 +288,7 @@ class Feed extends Component
             $variables[] = [
                 $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
                 $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ,
                 $this->_ig_picpuller_prefix.'status' => $data['status']
             ];
             return $variables;
@@ -306,6 +312,7 @@ class Feed extends Component
 
             $variables[] = [
                 $this->_ig_picpuller_prefix.'type' => $node['type'] ,
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ?? 'unknown' ,
                 $this->_ig_picpuller_prefix.'video_low_bandwidth' => $node['videos']['low_bandwidth']['url'] ?? '' ,
                 $this->_ig_picpuller_prefix.'video_low_bandwidth_width' => $node['videos']['low_bandwidth']['width'] ?? '' ,
                 $this->_ig_picpuller_prefix.'video_low_bandwidth_height' => $node['videos']['low_bandwidth']['height'] ?? '' ,
@@ -376,16 +383,23 @@ class Feed extends Component
         } catch (RequestException $exception) {
             if ($exception->hasResponse ()) {
                 $failedResponse = Json::decodeIfJson ( $exception->getResponse ()->getBody ()->getContents () );
-                $failedResponse = $failedResponse['meta'];
-                $error['status'] = false;
-                $error['code'] = $failedResponse['code'] ? $failedResponse['code'] : 'unknown';
-                $error['error_type'] = $failedResponse['error_type'] ? $failedResponse['error_type'] : 'HTTP_error';
-                $error['error_message'] = $failedResponse['error_message'] ? $failedResponse['error_message'] : 'The Instagram API did not return a response.';
+                if ($this->isJson ( $failedResponse )) {
+                    $failedResponse = $failedResponse['meta'];
+                    $error['status'] = false;
+                    $error['code'] = $failedResponse['code'] ? $failedResponse['code'] : 'unknown';
+                    $error['error_type'] = $failedResponse['error_type'] ? $failedResponse['error_type'] : 'HTTP_error';
+                    $error['error_message'] = $failedResponse['error_message'] ? $failedResponse['error_message'] : 'The Instagram API did not return a response.';
+                } else {
+                    $error['status'] = false;
+                    $error['code'] = $exception->getCode () ? $exception->getCode () : 'unknown';
+                    $error['error_type'] = 'HTTP_error';
+                    $error['error_message'] = $exception->getMessage () ? $exception->getMessage () : 'The Instagram API did not return a response.';
+                }
             } else {
                 $error['status'] = false;
-                $error['code'] = '503';
+                $error['code'] = $exception->getCode () ? $exception->getCode () : 'unknown';
                 $error['error_type'] = 'HTTP_error';
-                $error['error_message'] = $e->getMessage () ? $e->getMessage () : 'The Instagram API did not return a response.';
+                $error['error_message'] = $exception->getMessage () ? $exception->getMessage () : 'The Instagram API did not return a response.';
             }
 
             return $error;
@@ -407,7 +421,7 @@ class Feed extends Component
 
     private function _validate_data ($data , $url , $use_stale_cache)
     {
-        if ( array_key_exists('meta', $data) ){
+        if (array_key_exists ( 'meta' , $data )) {
             $meta = $data['meta'];
         } else {
             // Sometimes the Instagram returns a malformed JSON object
@@ -481,7 +495,6 @@ class Feed extends Component
 
         // merge the original data or cached data (if stale allowed) with the error array
         $returnedData = array_merge ( $data , $error_array );
-
         return $returnedData;
     }
 
@@ -563,5 +576,16 @@ class Feed extends Component
         ];
 
         return $variables;
+    }
+
+    /**
+     * Check to see if a string is JSON
+     *
+     * @return boolean
+     */
+    private function isJson ($string)
+    {
+        json_decode ( $string );
+        return (json_last_error () == JSON_ERROR_NONE);
     }
 }

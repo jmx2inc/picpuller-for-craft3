@@ -15,10 +15,12 @@
 {% set ppname = craft.picPuller.customName %}
 
 {% for instagramdata in craft.picPuller.user({'use_stale_cache' : false, 'user_id' : 1 }) %}
-    <p>Status: {{ instagramdata.status ? 'All good.' : 'Not good.' }}</p>
+    <p>Status: {{ instagramdata.status ? 'All good.' : 'Not good.' }}<br>
+        HTPP Code: <code>{{ instagramdata.code }}</code>
+    </p>
 
     {% if instagramdata.status == TRUE %}
-        <p>{{ instagramdata.cacheddata ? 'You’re using cached data.' : 'You\'re not using cached data' }}</p>
+        <p>{{ instagramdata.cacheddata ? 'You’re using cached data.' : 'You\'re not using cached data.' }}</p>
 
         <p><img src="{{ instagramdata.profile_picture }}"
                 alt='{{ instagramdata.full_name }}'></p>

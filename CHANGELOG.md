@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.10 - 2018-06-13
+### Fixed
+- Previous fix didn't address Instagram not responding to request at all. This updated addresses that.
+- Added "code" returned to both successful and unsuccessful Pic Puller calls.
+
 ## 3.0.9 - 2018-04-04
 ### Fixed
 - Instagram feed has been missing "meta" object for some users. This update checks for the presence of "meta". If missing it will attempt to serve stale cache if available. 

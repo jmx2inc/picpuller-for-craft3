@@ -8,7 +8,7 @@ Pic Puller provides native Craft tags to access Instagram media in templates. It
 
 ## What's new in version 3
 
-**Pic Puller for Craft 3** has been rewritten for Craft CMS 3. Functionalty is the same as in version 2. 
+**Pic Puller for Craft 3** has been rewritten for Craft CMS 3. Functionality is the same as in version 2. 
 
 For the sake of history, there was a significantly different version of Pic Puller in version 1 but ended due to Instagram's changed terms of API use. In late 2015, Instagram scaled back access to their API. Instagram now requires approval of all apps that attempt to use their API. Instagram would not approve any versions of Pic Puller 1 apps that users had created.
 

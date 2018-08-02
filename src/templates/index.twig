@@ -40,7 +40,7 @@
     </div>
 {% endset %}
 
-{% if currentUser.admin and craft.app.getEdition() == 2 %}
+{% if currentUser.admin and craft.app.getEdition() == 1 %}
     {% set tabs = {
 
     setup: { label: "Account"|t, url: url('pic-puller') },

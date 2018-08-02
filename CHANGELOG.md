@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.11 - 2018-08-02
+### Fixed
+- Users of Craft Pro were not seeing the additional options for multiple users. Pic Puller now checks.
+
 ## 3.0.10 - 2018-06-13
 ### Fixed
 - Previous fix didn't address Instagram not responding to request at all. This updated addresses that.

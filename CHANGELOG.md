@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 3.0.12 - 2018-08-20
 ### Fixed
-- Feed service was failing is Instagram Authorization had been removed.
+- Feed service was failing when Instagram Authorization had been removed a user's Instagram account.
 - Control panel fixed to removed incorrect Twig template display of errors. 
 
 ## 3.0.11 - 2018-08-02

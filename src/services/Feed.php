@@ -383,7 +383,7 @@ class Feed extends Component
         } catch (RequestException $exception) {
             if ($exception->hasResponse ()) {
                 $failedResponse = Json::decodeIfJson ( $exception->getResponse ()->getBody ()->getContents () );
-                if ($this->isJson ( $failedResponse )) {
+                if (is_array( $failedResponse )) {
                     $failedResponse = $failedResponse['meta'];
                     $error['status'] = false;
                     $error['code'] = $failedResponse['code'] ? $failedResponse['code'] : 'unknown';
@@ -576,16 +576,5 @@ class Feed extends Component
         ];
 
         return $variables;
-    }
-
-    /**
-     * Check to see if a string is JSON
-     *
-     * @return boolean
-     */
-    private function isJson ($string)
-    {
-        json_decode ( $string );
-        return (json_last_error () == JSON_ERROR_NONE);
     }
 }

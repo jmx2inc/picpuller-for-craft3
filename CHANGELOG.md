@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.12 - 2018-08-20
+### Fixed
+- Feed service was failing is Instagram Authorization had been removed.
+- Control panel fixed to removed incorrect Twig template display of errors. 
+
 ## 3.0.11 - 2018-08-02
 ### Fixed
 - Users of Craft Pro were not seeing the additional options for multiple users. Pic Puller now checks.

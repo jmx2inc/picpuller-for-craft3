@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.13.2 - 2018-08-20
+### Fixed
+- Added change log to previous release.
+- Updated composer.json
+- It's one of those days 
+
 ## 3.0.13.1 - 2018-08-20
 ### Fixed
 - Fixed variable name for use in Stats Widget. 

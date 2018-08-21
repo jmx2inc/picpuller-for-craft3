@@ -394,7 +394,7 @@ class Feed extends Component
             $apitotal = $response->getHeaderLine('x-ratelimit-limit') ? $response->getHeaderLine('x-ratelimit-limit') : 'unknown';
             $headerDataArray = [
                 'x-ratelimit-remaining' => $apiremain,
-                'x-ratelimit-limit' => $apitotal
+                'x-ratelimit' => $apitotal
             ];
             $body = array_merge( Json::decodeIfJson ( $response->getBody () ), $headerDataArray);
             return $this->_validate_data ( $body , $url , $use_stale_cache );

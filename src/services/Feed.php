@@ -85,7 +85,9 @@ class Feed extends Component
                 $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
                 $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
                 $this->_ig_picpuller_prefix.'code' => $data['code'] ,
-                $this->_ig_picpuller_prefix.'status' => $data['status']
+                $this->_ig_picpuller_prefix.'status' => $data['status'],
+                $this->_ig_picpuller_prefix.'apiremaining' => $data['x-ratelimit-remaining'] ?? 'unknown' ,
+                $this->_ig_picpuller_prefix.'apitotal' => $data['x-ratelimit'] ?? 'unknown'
             ];
             return $variables;
         }
@@ -96,6 +98,8 @@ class Feed extends Component
         $variables[] = [
             $this->_ig_picpuller_prefix.'username' => $node['username'] ,
             $this->_ig_picpuller_prefix.'code' => $data['code'] ?? 'unknown' ,
+            $this->_ig_picpuller_prefix.'apiremaining' => $data['x-ratelimit-remaining'] ?? 'unknown' ,
+            $this->_ig_picpuller_prefix.'apitotal' => $data['x-ratelimit'] ?? 'unknown' ,
             $this->_ig_picpuller_prefix.'bio' => $node['bio'] ,
             $this->_ig_picpuller_prefix.'profile_picture' => $node['profile_picture'] ,
             $this->_ig_picpuller_prefix.'website' => $node['website'] ,
@@ -167,7 +171,9 @@ class Feed extends Component
                 $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
                 $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
                 $this->_ig_picpuller_prefix.'code' => $data['code'] ,
-                $this->_ig_picpuller_prefix.'status' => $data['status'] ? 1 : 0
+                $this->_ig_picpuller_prefix.'status' => $data['status'] ? 1 : 0,
+                $this->_ig_picpuller_prefix.'apiremaining' => $data['x-ratelimit-remaining'] ?? 'unknown' ,
+                $this->_ig_picpuller_prefix.'apitotal' => $data['x-ratelimit'] ?? 'unknown'
             ];
             return $variables;
         }
@@ -189,6 +195,8 @@ class Feed extends Component
         $variables[] = [
             $this->_ig_picpuller_prefix.'type' => $node['type'] ,
             $this->_ig_picpuller_prefix.'code' => $data['code'] ?? 'unknown' ,
+            $this->_ig_picpuller_prefix.'apiremaining' => $data['x-ratelimit-remaining'] ?? 'unknown' ,
+            $this->_ig_picpuller_prefix.'apitotal' => $data['x-ratelimit'] ?? 'unknown' ,
             $this->_ig_picpuller_prefix.'video_low_bandwidth' => $node['videos']['low_bandwidth']['url'] ?? '' ,
             $this->_ig_picpuller_prefix.'video_low_bandwidth_width' => $node['videos']['low_bandwidth']['width'] ?? '' ,
             $this->_ig_picpuller_prefix.'video_low_bandwidth_height' => $node['videos']['low_bandwidth']['height'] ?? '' ,
@@ -289,7 +297,9 @@ class Feed extends Component
                 $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
                 $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
                 $this->_ig_picpuller_prefix.'code' => $data['code'] ,
-                $this->_ig_picpuller_prefix.'status' => $data['status']
+                $this->_ig_picpuller_prefix.'status' => $data['status'],
+                $this->_ig_picpuller_prefix.'apiremaining' => $data['x-ratelimit-remaining'] ?? 'unknown' ,
+                $this->_ig_picpuller_prefix.'apitotal' => $data['x-ratelimit'] ?? 'unknown'
             ];
             return $variables;
         }
@@ -313,6 +323,8 @@ class Feed extends Component
             $variables[] = [
                 $this->_ig_picpuller_prefix.'type' => $node['type'] ,
                 $this->_ig_picpuller_prefix.'code' => $data['code'] ?? 'unknown' ,
+                $this->_ig_picpuller_prefix.'apiremaining' => $data['x-ratelimit-remaining'] ?? 'unknown' ,
+                $this->_ig_picpuller_prefix.'apitotal' => $data['x-ratelimit'] ?? 'unknown' ,
                 $this->_ig_picpuller_prefix.'video_low_bandwidth' => $node['videos']['low_bandwidth']['url'] ?? '' ,
                 $this->_ig_picpuller_prefix.'video_low_bandwidth_width' => $node['videos']['low_bandwidth']['width'] ?? '' ,
                 $this->_ig_picpuller_prefix.'video_low_bandwidth_height' => $node['videos']['low_bandwidth']['height'] ?? '' ,
@@ -378,28 +390,51 @@ class Feed extends Component
 
         try {
             $response = $client->request ( 'GET' , $requestUrl , $options );
-            $body = Json::decodeIfJson ( $response->getBody () );
+            $apiremain = $response->getHeaderLine('x-ratelimit-remaining') ? $response->getHeaderLine('x-ratelimit-remaining') : 'unknown';
+            $apitotal = $response->getHeaderLine('x-ratelimit-limit') ? $response->getHeaderLine('x-ratelimit-limit') : 'unknown';
+            $headerDataArray = [
+                'x-ratelimit-remaining' => $apiremain,
+                'x-ratelimit-limit' => $apitotal
+            ];
+            $body = array_merge( Json::decodeIfJson ( $response->getBody () ), $headerDataArray);
             return $this->_validate_data ( $body , $url , $use_stale_cache );
         } catch (RequestException $exception) {
             if ($exception->hasResponse ()) {
                 $failedResponse = Json::decodeIfJson ( $exception->getResponse ()->getBody ()->getContents () );
                 if (is_array( $failedResponse )) {
-                    $failedResponse = $failedResponse['meta'];
-                    $error['status'] = false;
-                    $error['code'] = $failedResponse['code'] ? $failedResponse['code'] : 'unknown';
-                    $error['error_type'] = $failedResponse['error_type'] ? $failedResponse['error_type'] : 'HTTP_error';
-                    $error['error_message'] = $failedResponse['error_message'] ? $failedResponse['error_message'] : 'The Instagram API did not return a response.';
+                    if( array_key_exists('meta', $failedResponse ) ) {
+                        $failedResponse = $failedResponse['meta'];
+                        $error['status'] = false;
+                        $error['code'] = $failedResponse['code'] ? $failedResponse['code'] : 'unknown';
+                        $error['error_type'] = $failedResponse['error_type'] ? $failedResponse['error_type'] : 'HTTP_error';
+                        $error['error_message'] = $failedResponse['error_message'] ? $failedResponse['error_message'] : 'The Instagram API did not return a response.';
+                        $error['x-ratelimit-remaining'] = 'none';
+                        $error['x-ratelimit'] = 'none';
+
+                    } else {
+                        $error['status'] = false;
+                        $error['code'] = $failedResponse['code'] ? $failedResponse['code'] : 'unknown';
+                        $error['error_type'] = $failedResponse['error_type'] ? $failedResponse['error_type'] : 'HTTP_error';
+                        $error['error_message'] = $failedResponse['error_message'] ? $failedResponse['error_message'] : 'The Instagram API did not return a response.';
+                        $error['x-ratelimit-remaining'] = 'none';
+                        $error['x-ratelimit'] = 'none';
+                    }
+
                 } else {
                     $error['status'] = false;
                     $error['code'] = $exception->getCode () ? $exception->getCode () : 'unknown';
                     $error['error_type'] = 'HTTP_error';
                     $error['error_message'] = $exception->getMessage () ? $exception->getMessage () : 'The Instagram API did not return a response.';
+                    $error['x-ratelimit-remaining'] = 'none';
+                    $error['x-ratelimit'] = 'none';
                 }
             } else {
                 $error['status'] = false;
                 $error['code'] = $exception->getCode () ? $exception->getCode () : 'unknown';
                 $error['error_type'] = 'HTTP_error';
                 $error['error_message'] = $exception->getMessage () ? $exception->getMessage () : 'The Instagram API did not return a response.';
+                $error['x-ratelimit-remaining'] = 'none';
+                $error['x-ratelimit'] = 'none';
             }
 
             return $error;

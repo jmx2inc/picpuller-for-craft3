@@ -26,6 +26,7 @@
 <div class="body">
     {% for instagramdata in craft.picPuller.media_recent({'user_id' : 1,  'use_stale_cache' : true, 'limit': 1}) %}
         {% if instagramdata.status == 'true' %}
+            <p>API limits: <code>{{ instagramdata.apiremaining }} / {{ instagramdata.apitotal }}</code></p>
             <p><img src="{{ instagramdata.low_resolution }}"
                     class='pppreviewimage'></p>
             {% if instagramdata.caption is not empty %}

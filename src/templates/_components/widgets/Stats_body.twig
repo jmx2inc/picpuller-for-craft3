@@ -16,7 +16,8 @@
 
 {% for instagramdata in craft.picPuller.user({'use_stale_cache' : false, 'user_id' : 1 }) %}
     <p>Status: {{ instagramdata.status ? 'All good.' : 'Not good.' }}<br>
-        HTPP Code: <code>{{ instagramdata.code }}</code>
+        HTPP Code: <code>{{ instagramdata.code }}</code><br>
+        API limits: <code>{{ instagramdata.apiremaining }} / {{ instagramdata.apitotal }}</code>
     </p>
 
     {% if instagramdata.status == TRUE %}

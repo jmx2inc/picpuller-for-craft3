@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.14 - 2018-11-29
+### Fixed
+- Looping through a feed of images would incorrectly attribute a previous image's caption to the next image if that image had no caption defined. This update fixes that error.
+
 ## 3.0.13.2 - 2018-08-20
 ### Fixed
 - Added change log to previous release.

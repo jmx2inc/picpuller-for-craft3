@@ -312,6 +312,10 @@ class Feed extends Component
         $cacheddata = isset( $data['cacheddata'] ) ? true : false;
 
         foreach ($data['data'] as $node) {
+            // These vars are reset to empty strings to prevent subsequent loops not assigning
+            // a photo with no caption the previous image's caption
+            $caption = '';
+            $captionTitle = '';
             if (isset( $node['caption']['text'] )) {
                 $caption = $node['caption']['text'];
                 $titletohashpattern = '/^[^#]*(?!#)/';

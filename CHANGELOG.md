@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.15 - 2019-01-07
+### Fixed
+- When sharing an Instagram authorization across users, Pic Puller chose user 1 as the default auth to share. This caused an error when no user 1 was in Craft. This has been fixed.
+- When trying to process and empty variable through Pic Puller, an error occurred when trying to assign an null value to the error code. This has been fixed.
+
 ## 3.0.14 - 2018-11-29
 ### Fixed
 - Looping through a feed of images would incorrectly attribute a previous image's caption to the next image if that image had no caption defined. This update fixes that error.

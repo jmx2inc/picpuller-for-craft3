@@ -84,7 +84,7 @@ class Feed extends Component
             $variables[] = [
                 $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
                 $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
-                $this->_ig_picpuller_prefix.'code' => $data['code'] ,
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ?? null,
                 $this->_ig_picpuller_prefix.'status' => $data['status'],
                 $this->_ig_picpuller_prefix.'apiremaining' => $data['x-ratelimit-remaining'] ?? 'unknown' ,
                 $this->_ig_picpuller_prefix.'apitotal' => $data['x-ratelimit'] ?? 'unknown'
@@ -153,7 +153,7 @@ class Feed extends Component
                 $this->_ig_picpuller_prefix.'code' => '000' ,
                 $this->_ig_picpuller_prefix.'error_type' => 'MissingReqParameter' ,
                 $this->_ig_picpuller_prefix.'error_message' => 'No media_id set for this function' ,
-                $this->_ig_picpuller_prefix.'code' => $data['code'] ,
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ?? null,
                 $this->_ig_picpuller_prefix.'status' => false
             ];
             return $variables;
@@ -170,7 +170,7 @@ class Feed extends Component
                 $this->_ig_picpuller_prefix.'code' => $data['code'] ? $data['code'] : '000' ,
                 $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
                 $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
-                $this->_ig_picpuller_prefix.'code' => $data['code'] ,
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ?? null,
                 $this->_ig_picpuller_prefix.'status' => $data['status'] ? 1 : 0,
                 $this->_ig_picpuller_prefix.'apiremaining' => $data['x-ratelimit-remaining'] ?? 'unknown' ,
                 $this->_ig_picpuller_prefix.'apitotal' => $data['x-ratelimit'] ?? 'unknown'
@@ -296,7 +296,7 @@ class Feed extends Component
             $variables[] = [
                 $this->_ig_picpuller_prefix.'error_type' => $data['error_type'] ,
                 $this->_ig_picpuller_prefix.'error_message' => $data['error_message'] ,
-                $this->_ig_picpuller_prefix.'code' => $data['code'] ,
+                $this->_ig_picpuller_prefix.'code' => $data['code'] ?? null,
                 $this->_ig_picpuller_prefix.'status' => $data['status'],
                 $this->_ig_picpuller_prefix.'apiremaining' => $data['x-ratelimit-remaining'] ?? 'unknown' ,
                 $this->_ig_picpuller_prefix.'apitotal' => $data['x-ratelimit'] ?? 'unknown'

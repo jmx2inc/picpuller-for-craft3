@@ -41,7 +41,7 @@ class Settings extends Model
      */
     public $shortName = 'Pic Puller for Craft';
     public $sharedoauth = false;
-    public $sharedoauthuser = 1;
+    public $sharedoauthuser = null;
 
     // Public Methods
     // =========================================================================
@@ -62,7 +62,12 @@ class Settings extends Model
             ['shortName' , 'string'] ,
             ['shortName' , 'default' , 'value' => 'Pic Puller for Craft'] ,
             ['sharedoauth' , 'default' , 'value' => 0] ,
-            ['sharedoauthuser' , 'default' , 'value' => 1]
+            ['sharedoauthuser',
+                'required',
+                'when' => function ($model) {
+                    return $model->sharedoauth;
+                }
+            ]
         ];
     }
 }

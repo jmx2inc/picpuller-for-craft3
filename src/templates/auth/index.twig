@@ -18,7 +18,7 @@
             Craft.postActionRequest('pic-puller/default/save-credentials', data, function(response) {
                 console.log('I heard back from the post action');
                 console.log("response:", response);
-                if( (typeof(response) !== "undefined") && (response.success === true) ) {
+                if( (typeof(response.success) !== "undefined") && (response.success === true) ) {
                     $("#message").html("<p>Authentication is complete.</p>");
                 }
                 else
